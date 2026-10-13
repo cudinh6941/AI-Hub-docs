@@ -1,0 +1,88 @@
+[
+  {
+    "id": "VID-001",
+    "title": "Viết báo cáo tuần cho lãnh đạo với M365 Copilot trong 5 phút",
+    "slug": "bao-cao-tuan-voi-m365-copilot",
+    "summary": "Từ thư mục báo cáo rời rạc trên SharePoint đến một trang Executive Briefing hoàn chỉnh.",
+    "durationMinutes": 6,
+    "level": "Cơ bản",
+    "department": "Ban Giám Đốc",
+    "tool": "M365 Copilot",
+    "updatedAt": "2026-03-26",
+    "accent": "from-indigo-500 to-purple-500",
+    "source": { "type": "placeholder", "provider": "SharePoint / Stream", "url": "" },
+    "chapters": [
+      { "time": "00:00", "title": "Vấn đề: báo cáo tuần tốn 2 giờ mỗi thứ Hai" },
+      { "time": "01:10", "title": "Chuẩn bị thư mục SharePoint đúng cách" },
+      { "time": "02:30", "title": "Chạy prompt và điền biến số" },
+      { "time": "04:20", "title": "Kiểm tra kết quả (Human-in-the-loop)" }
+    ],
+    "transcript": "Mỗi sáng thứ Hai, bạn nhận 6 file báo cáo từ 6 phòng ban. Thay vì đọc từng file, hãy mở Copilot, chỉ định đúng thư mục SharePoint của tuần và đặt ngưỡng rủi ro. Copilot sẽ trả về bản tóm tắt tối đa 500 từ. Luôn đọc lại các con số trước khi gửi cho lãnh đạo.",
+    "relatedPromptIds": ["BOD-001"],
+    "tags": ["bao cao", "executive", "sharepoint"]
+  },
+  {
+    "id": "VID-002",
+    "title": "Phân tích chênh lệch ngân sách P&L bằng Excel Copilot",
+    "slug": "phan-tich-chenh-lech-pl-excel-copilot",
+    "summary": "Tìm các khoản chi vượt định mức và đề xuất cắt giảm, không cần viết công thức.",
+    "durationMinutes": 8,
+    "level": "Trung cấp",
+    "department": "Tài chính - Kế toán",
+    "tool": "Excel Copilot",
+    "updatedAt": "2026-03-24",
+    "accent": "from-emerald-500 to-teal-500",
+    "source": { "type": "placeholder", "provider": "SharePoint / Stream", "url": "" },
+    "chapters": [
+      { "time": "00:00", "title": "Chuẩn bị bảng dữ liệu P&L" },
+      { "time": "02:00", "title": "Đặt ngưỡng vượt ngân sách" },
+      { "time": "04:30", "title": "Đọc và kiểm tra kết quả" },
+      { "time": "06:40", "title": "Lỗi thường gặp: sai vùng dữ liệu" }
+    ],
+    "transcript": "Đặt tên Sheet rõ ràng, chọn đúng vùng dữ liệu, rồi nhập ngưỡng phần trăm và số tiền tối thiểu. Copilot sẽ thêm cột chênh lệch và gom nhóm theo trung tâm chi phí.",
+    "relatedPromptIds": ["FIN-001", "FIN-002"],
+    "tags": ["excel", "p&l", "ngan sach"]
+  },
+  {
+    "id": "VID-003",
+    "title": "Rà soát hợp đồng nhanh: 4 điều khoản cần soi trước tiên",
+    "slug": "ra-soat-hop-dong-4-dieu-khoan",
+    "summary": "Mức phạt, giới hạn trách nhiệm, chấm dứt hợp đồng và cơ quan giải quyết tranh chấp.",
+    "durationMinutes": 7,
+    "level": "Nâng cao",
+    "department": "Pháp chế",
+    "tool": "Word Copilot",
+    "updatedAt": "2026-03-22",
+    "accent": "from-sky-500 to-indigo-500",
+    "source": { "type": "placeholder", "provider": "SharePoint / Stream", "url": "" },
+    "chapters": [
+      { "time": "00:00", "title": "Xác định bạn là bên nào trong hợp đồng" },
+      { "time": "01:30", "title": "Chạy prompt rà soát" },
+      { "time": "04:00", "title": "Dùng gợi ý redline" }
+    ],
+    "transcript": "Luôn nói rõ bạn là bên Mua hay bên Cung cấp. Kết quả của AI chỉ là bản nháp, luật sư của công ty vẫn là người quyết định cuối cùng.",
+    "relatedPromptIds": ["LEG-001", "LEG-002"],
+    "tags": ["hop dong", "phap che"]
+  },
+  {
+    "id": "VID-004",
+    "title": "5 nguyên tắc viết prompt hiệu quả (dành cho người mới)",
+    "slug": "5-nguyen-tac-viet-prompt",
+    "summary": "Vai trò, bối cảnh, nhiệm vụ, ràng buộc, định dạng đầu ra: khung nền tảng cho mọi prompt.",
+    "durationMinutes": 5,
+    "level": "Cơ bản",
+    "department": "Chung",
+    "tool": "ChatGPT / Claude",
+    "updatedAt": "2026-03-15",
+    "accent": "from-amber-500 to-rose-500",
+    "source": { "type": "placeholder", "provider": "SharePoint / Stream", "url": "" },
+    "chapters": [
+      { "time": "00:00", "title": "Vì sao prompt chung chung cho kết quả chung chung" },
+      { "time": "01:20", "title": "Khung 5 phần" },
+      { "time": "03:30", "title": "Ví dụ trước và sau" }
+    ],
+    "transcript": "Một prompt tốt có 5 phần: vai trò, bối cảnh, nhiệm vụ, ràng buộc và định dạng đầu ra. Hãy bắt đầu từ các công thức có sẵn trong thư viện rồi chỉnh dần.",
+    "relatedPromptIds": ["HR-001", "OPS-002"],
+    "tags": ["co ban", "prompting"]
+  }
+]
