@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Search, ArrowRight, FileText, FileSpreadsheet, Zap, ShieldCheck, PlayCircle } from 'lucide-react'
+import { Search, ArrowRight, FileText, FileSpreadsheet, Zap, ShieldCheck, PlayCircle, Sparkles } from 'lucide-react'
 import { useContent } from '../hooks/useContent'
 import { getHomeData } from '../services/contentService'
 import DocRecipeCard from '../components/DocRecipeCard'
@@ -67,17 +67,25 @@ export default function HomePage() {
       <section className="relative overflow-hidden border-b border-slate-200/80">
         <div className="absolute inset-0 dot-pattern opacity-30 pointer-events-none" />
         <div className="absolute inset-0 hero-gradient pointer-events-none" />
+        {/* Gemini Aurora ambient glow */}
+        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[520px] sm:w-[680px] h-[280px] sm:h-[340px] bg-gradient-to-tr from-indigo-500/15 via-purple-500/15 to-sky-400/15 blur-3xl rounded-full pointer-events-none animate-float-glow" />
+
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center">
-          <p className="text-xs font-semibold text-indigo-600 uppercase tracking-wider mb-4">Chào mừng đến AI Hub Docs</p>
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15] mb-5">
-            Học cách dùng AI vào công việc hằng ngày, ngay tại công ty.
+          <div className="animate-fade-up inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50/80 text-indigo-700 border border-indigo-200/60 mb-4 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-indigo-600 animate-pulse" />
+            <span>Chào mừng đến AI Hub Docs</span>
+          </div>
+
+          <h1 className="animate-fade-up delay-100 text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15] mb-5">
+            Luôn có cách <span className="animate-gemini-gradient">nhanh hơn</span> để xử lý việc bạn đang làm.
           </h1>
-          <p className="text-sm sm:text-base text-slate-600 max-w-xl mx-auto leading-relaxed mb-8">
+
+          <p className="animate-fade-up delay-200 text-sm sm:text-base text-slate-600 max-w-xl mx-auto leading-relaxed mb-8">
             Video hướng dẫn ngắn, công thức prompt đã được kiểm chứng và quy chuẩn an toàn dữ liệu. Tất cả ở một nơi, dành cho mọi phòng ban.
           </p>
 
-          <form onSubmit={submit} className="max-w-xl mx-auto mb-6">
-            <div className="relative flex items-center shadow-[0_2px_12px_rgba(0,0,0,0.06)] rounded-xl">
+          <form onSubmit={submit} className="animate-fade-up delay-300 max-w-xl mx-auto mb-6">
+            <div className="relative flex items-center shadow-[0_2px_12px_rgba(0,0,0,0.06)] rounded-xl transition-transform duration-200 hover:scale-[1.01]">
               <Search className="w-4 h-4 text-slate-400 absolute left-4 pointer-events-none" />
               <input
                 value={query}
@@ -91,8 +99,8 @@ export default function HomePage() {
             </div>
           </form>
 
-          <div className="flex items-center justify-center gap-3">
-            <Link to="/learn" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition-colors duration-200">
+          <div className="animate-fade-up delay-400 flex items-center justify-center gap-3">
+            <Link to="/learn" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition-all duration-200 hover:shadow-md hover:shadow-indigo-500/20">
               <PlayCircle className="w-4 h-4" /> Bắt đầu học
             </Link>
             <Link to="/prompts" className="px-4 py-2.5 rounded-lg bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200 transition-colors duration-200">
@@ -101,7 +109,7 @@ export default function HomePage() {
           </div>
 
           {data && (
-            <div className="mt-10 flex items-center justify-center gap-8 text-xs text-slate-500">
+            <div className="animate-fade-up delay-500 mt-10 flex items-center justify-center gap-8 text-xs text-slate-500">
               <div><strong className="block text-lg text-slate-900">{data.stats.total}</strong>công thức prompt</div>
               <div><strong className="block text-lg text-slate-900">{data.stats.verifiedCount}</strong>đã kiểm chứng</div>
               <div><strong className="block text-lg text-slate-900">{data.stats.videos}</strong>video hướng dẫn</div>

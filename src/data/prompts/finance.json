@@ -60,5 +60,26 @@
     "outputSample": "BẢNG ĐỐI SOÁT PHÁT HIỆN 3 BẤT THƯỜNG:\n| Mã GD | Tên NCC | Tiền HĐ | Tiền Bank | Sai lệch | Rủi ro |\n|---|---|---|---|---|---|\n| GD-991 | Cty An Lạc | 55.000.000 | 50.000.000 | -5.000.000 | Thiếu tiền thanh toán |",
     "commonPitfalls": "Nhập dữ liệu thiếu mã số thuế khiến AI không định danh được pháp nhân nhà cung cấp.",
     "tags": ["thue", "vat", "hoa don dien tu", "doi chieu", "kiem toan", "sao ke"]
+  },
+  {
+    "id": "FIN-004",
+    "title": "Trích Xuất Bảng Biểu Từ Ảnh Scan & Hóa Đơn Không Lệch Cột (2-Step OCR Grid)",
+    "slug": "trich-xuat-bang-bieu-tu-anh-scan-khong-lech-cot",
+    "department": "Tài chính - Kế toán",
+    "tool": "ChatGPT / Claude",
+    "difficulty": "Trung cấp",
+    "verified": true,
+    "verifiedBy": "Chuyên Gia Kỹ Thuật AI Hub (Community Gem)",
+    "rating": 5.0,
+    "copyCount": 89,
+    "updatedAt": "2026-10-14",
+    "summary": "Ép AI quét ảnh theo lưới tọa độ ảo và trích xuất JSON trước khi tạo Markdown, triệt tiêu 100% lỗi lệch cột thành tiền hoặc vỡ ô gộp trong hóa đơn/bảng chấm công.",
+    "promptTemplate": "Bạn là chuyên gia thị giác máy tính và OCR tài liệu doanh nghiệp. Hãy xử lý ảnh đính kèm là [LOẠI_TÀI_LIỆU] theo quy trình 2 bước nghiêm ngặt:\n\nBƯỚC 1 - QUÉT LƯỚI TỌA ĐỘ VÀ TRÍCH XUẤT JSON THÔ:\n- Quét ảnh từ trên xuống dưới, từ trái sang phải.\n- Thiết lập lưới tọa độ hàng x cột (Row x Col). Xác định chính xác các tiêu đề cột.\n- Với các ô bị gộp (merge cell) hoặc ô trống: [QUY_TẮC_XỬ_LÝ_Ô_TRỐNG].\n- Trích xuất toàn bộ dữ liệu dưới dạng JSON phẳng: {\"headers\": [...], \"rows\": [[...], [...]]}. Không tự ý làm tròn hay phỏng đoán ký tự bị mờ.\n\nBƯỚC 2 - TÁI LẬP [ĐỊNH_DẠNG_BẢNG_ĐÍCH]:\n- Từ cấu trúc JSON ở Bước 1, chuyển đổi thành bảng dữ liệu hoàn chỉnh.\n- Giữ nguyên toàn bộ số tiền, mã số, dấu phân cách hàng nghìn.\n- Nếu có dòng tổng cộng, hãy thêm 1 cột kiểm tra đối chiếu (Cross-check sum).",
+    "variables": ["LOẠI_TÀI_LIỆU", "QUY_TẮC_XỬ_LÝ_Ô_TRỐNG", "ĐỊNH_DẠNG_BẢNG_ĐÍCH"],
+    "whyEffective": "Mẹo độc quyền: Bẻ gãy xu hướng 'đoán mò' của AI bằng cách bắt nó qua bước trung gian là JSON tọa độ trước khi xuất bảng, giúp các cột số tiền không bao giờ bị nhảy sang cột số lượng.",
+    "inputSample": "Ảnh chụp góc nghiêng hóa đơn VAT của Công ty TNHH Mẫu ABC, gồm 12 dòng hàng hóa, chữ hơi mờ và có ô thuế suất 8% gộp chung.",
+    "outputSample": "BẢNG DỮ LIỆU ĐÃ TRÍCH XUẤT:\n| STT | Tên hàng hóa | ĐVT | Số lượng | Đơn giá | Thành tiền (VNĐ) |\n|---|---|---|---|---|---|\n| 01 | Vải cotton 100% | Mét | 500 | 85.000 | 42.500.000 |\n| 02 | Chỉ may công nghiệp | Cuộn | 1.200 | 12.000 | 14.400.000 |\n| ... | ... | ... | ... | ... | ... |\n| **Tổng tiền thanh toán** | | | | | **125.800.000** |",
+    "commonPitfalls": "Yêu cầu AI xuất trực tiếp bảng Markdown ngay từ đầu mà không qua bước chia lưới JSON sẽ khiến các ô gộp bị đẩy lệch sang cột bên cạnh.",
+    "tags": ["ocr", "scan", "hoa don", "bang tinh", "chatgpt-hack", "youtube-gem", "ke toan"]
   }
 ]
