@@ -7,10 +7,17 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "agy:publish": "pwsh -File ./scripts/pipeline.ps1 -Action publish",
+    "agy:qa": "pwsh -File ./scripts/pipeline.ps1 -Action qa",
+    "agy:spec": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./scripts/pipeline.ps1 -Action spec -SpecFile"
   },
   "dependencies": {
+    "@electric-sql/pglite": "^0.5.10",
+    "@hono/node-server": "^2.1.5",
+    "hono": "^4.13.13",
     "lucide-react": "^1.56.0",
+    "pg": "^8.23.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.4"

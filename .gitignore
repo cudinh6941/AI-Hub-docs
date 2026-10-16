@@ -22,3 +22,17 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Obsidian Workspace State
+.obsidian/workspace.json
+.obsidian/workspaces.json
+**/.obsidian/workspace.json
+**/.obsidian/workspaces.json
+product/.obsidian/workspace.json
+product/.obsidian/workspaces.json
+
+# Database & Environment
+database/pgdata/
+.env
+.env.*
+!.env.example

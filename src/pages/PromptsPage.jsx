@@ -1,12 +1,14 @@
-import React, { useMemo } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { RotateCcw, Search } from 'lucide-react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { RotateCcw, Search, Plus } from 'lucide-react'
 import { useContent } from '../hooks/useContent'
 import { getPrompts } from '../services/contentService'
+import { isAdminAuthenticated, subscribeAdminAuth } from '../services/authService'
 import { searchAndRankPrompts } from '../services/searchEngine.js'
 import { DEPARTMENTS, TOOLS, DIFFICULTIES } from '../data/prompts/index.js'
 import DocRecipeCard from '../components/DocRecipeCard'
 import EmptyState from '../components/EmptyState'
+import PromptFormModal from '../components/admin/PromptFormModal'
 
 const SORTS = [
   { id: 'all', label: 'Phù hợp nhất' },
@@ -33,7 +35,15 @@ function Select({ label, value, options, onChange }) {
 /** Library page. All filter state lives in the URL so views are shareable and Back works. */
 export default function PromptsPage() {
   const [params, setParams] = useSearchParams()
-  const { data: all, loading } = useContent(getPrompts, [])
+  const navigate = useNavigate()
+  const [refreshTick, setRefreshTick] = useState(0)
+  const [isAdmin, setIsAdmin] = useState(() => isAdminAuthenticated())
+  const [isCreateOpen, setIsCreateOpen] = useState(false)
+  const { data: all, loading } = useContent(getPrompts, [refreshTick])
+
+  useEffect(() => {
+    return subscribeAdminAuth((status) => setIsAdmin(status))
+  }, [])
 
   const q = params.get('q') || ''
   const dept = params.get('dept') || 'Tất cả'
@@ -63,12 +73,23 @@ export default function PromptsPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Thư viện Prompt</h1>
-        <p className="text-sm text-slate-600 mt-1">Công thức đã được phòng ban kiểm chứng. Tìm theo bài toán, phòng ban hoặc công cụ.</p>
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Thư viện Prompt</h1>
+          <p className="text-sm text-slate-600 mt-1">Công thức đã được phòng ban kiểm chứng. Tìm theo bài toán, phòng ban hoặc công cụ.</p>
+        </div>
+        {isAdmin && (
+          <button
+            type="button"
+            onClick={() => setIsCreateOpen(true)}
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs transition-colors shrink-0"
+          >
+            <Plus className="w-4 h-4" /> Tạo Prompt Mới
+          </button>
+        )}
       </div>
 
-      <div className="bg-[#FAFAFA] border border-slate-200/80 rounded-xl p-4 mb-6 space-y-3">
+      <div className="bg-[#FAFAFA] border border-slate-200/80 rounded-xl p-4 mb-6 space-y-3 animate-fade-up delay-100">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-1 p-1 bg-slate-200/60 rounded-lg overflow-x-auto max-w-full">
             {SORTS.map((s) => (
@@ -100,26 +121,37 @@ export default function PromptsPage() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between mb-4 text-xs text-slate-500">
-        <span>
-          <strong className="text-slate-900">{results.length}</strong> công thức
-        </span>
-        {isFiltered && (
-          <button onClick={() => setParams({}, { replace: true })} className="inline-flex items-center gap-1 hover:text-rose-600 font-medium transition-colors">
-            <RotateCcw className="w-3.5 h-3.5" /> Đặt lại bộ lọc
-          </button>
+      <div className="animate-fade-up delay-200">
+        <div className="flex items-center justify-between mb-4 text-xs text-slate-500">
+          <span>
+            <strong className="text-slate-900">{results.length}</strong> công thức
+          </span>
+          {isFiltered && (
+            <button onClick={() => setParams({}, { replace: true })} className="inline-flex items-center gap-1 hover:text-rose-600 font-medium transition-colors">
+              <RotateCcw className="w-3.5 h-3.5" /> Đặt lại bộ lọc
+            </button>
+          )}
+        </div>
+
+        {loading ? (
+          <div className="text-xs text-slate-400">Đang tải…</div>
+        ) : results.length ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {results.map((p) => <DocRecipeCard key={p.id} prompt={p} />)}
+          </div>
+        ) : (
+          <EmptyState onReset={() => setParams({}, { replace: true })} />
         )}
       </div>
 
-      {loading ? (
-        <div className="text-xs text-slate-400">Đang tải…</div>
-      ) : results.length ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {results.map((p) => <DocRecipeCard key={p.id} prompt={p} />)}
-        </div>
-      ) : (
-        <EmptyState onReset={() => setParams({}, { replace: true })} />
-      )}
+      <PromptFormModal
+        isOpen={isCreateOpen}
+        onClose={() => setIsCreateOpen(false)}
+        onSaved={(created) => {
+          setRefreshTick((t) => t + 1)
+          if (created?.slug) navigate(`/prompts/${created.slug}`)
+        }}
+      />
     </div>
   )
 }

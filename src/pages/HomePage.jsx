@@ -79,11 +79,6 @@ export default function HomePage() {
           <h1 className="animate-fade-up delay-100 text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15] mb-5">
             Luôn có cách <span className="animate-gemini-gradient">nhanh hơn</span> để xử lý việc bạn đang làm.
           </h1>
-
-          <p className="animate-fade-up delay-200 text-sm sm:text-base text-slate-600 max-w-xl mx-auto leading-relaxed mb-8">
-            Video hướng dẫn ngắn, công thức prompt đã được kiểm chứng và quy chuẩn an toàn dữ liệu. Tất cả ở một nơi, dành cho mọi phòng ban.
-          </p>
-
           <form onSubmit={submit} className="animate-fade-up delay-300 max-w-xl mx-auto mb-6">
             <div className="relative flex items-center shadow-[0_2px_12px_rgba(0,0,0,0.06)] rounded-xl transition-transform duration-200 hover:scale-[1.01]">
               <Search className="w-4 h-4 text-slate-400 absolute left-4 pointer-events-none" />
@@ -119,7 +114,7 @@ export default function HomePage() {
       </section>
 
       {/* Guided paths */}
-      <section className="py-14 border-b border-slate-200/80">
+      <section className="py-14 border-b border-slate-200/80 animate-fade-up delay-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader eyebrow="Bắt đầu từ nhu cầu" title="Bạn đang muốn làm việc gì?" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -147,7 +142,7 @@ export default function HomePage() {
       </section>
 
       {/* Videos */}
-      <section className="py-14 bg-[#FAFAFA] border-b border-slate-200/80">
+      <section className="py-14 bg-[#FAFAFA] border-b border-slate-200/80 animate-fade-up delay-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader eyebrow="Học qua video" title="Hướng dẫn ngắn, xem là làm được" to="/learn" linkLabel="Tất cả video" />
           {loading ? (
@@ -161,7 +156,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured prompts: a single row only */}
-      <section className="py-14 border-b border-slate-200/80">
+      <section className="py-14 border-b border-slate-200/80 animate-fade-up delay-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader eyebrow="Được dùng nhiều nhất" title="Công thức nổi bật" to="/prompts" linkLabel="Xem toàn bộ thư viện" />
           {loading ? (
@@ -175,7 +170,7 @@ export default function HomePage() {
       </section>
 
       {/* Governance strip */}
-      <section className="py-12">
+      <section className="py-12 animate-fade-up delay-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-xl border border-slate-200/80 bg-slate-50 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-start gap-3">

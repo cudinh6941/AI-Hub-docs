@@ -1,4 +1,3 @@
-import React from 'react'
 import { ShieldCheck, ShieldAlert, UserCheck, ScrollText } from 'lucide-react'
 
 export default function GovernancePage() {
@@ -7,7 +6,7 @@ export default function GovernancePage() {
       <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Quy chuẩn & Bảo mật</h1>
       <p className="text-sm text-slate-600 mt-1 mb-8">Đọc trước khi dùng bất kỳ công cụ AI nào với dữ liệu công ty.</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8 animate-fade-up delay-100">
         <div className="rounded-xl border border-emerald-200/70 bg-emerald-50/40 p-5">
           <div className="flex items-center gap-2 text-sm font-bold text-emerald-800 mb-2">
             <ShieldCheck className="w-4 h-4" /> Dữ liệu Công khai / Nội bộ
@@ -22,7 +21,7 @@ export default function GovernancePage() {
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 animate-fade-up delay-200">
         <div className="rounded-xl border border-slate-200/80 p-5 flex gap-3">
           <UserCheck className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
           <div>

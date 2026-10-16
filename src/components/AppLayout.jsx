@@ -3,11 +3,13 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import Navbar from './Navbar'
 import AskAiModal from './AskAiModal'
 import SuggestUseCaseModal from './SuggestUseCaseModal'
-import { ALL_PROMPTS } from '../data/prompts/index.js'
+import { useContent } from '../hooks/useContent'
+import { getPrompts } from '../services/contentService'
 
 export default function AppLayout() {
   const [isAskOpen, setIsAskOpen] = useState(false)
   const [isSuggestOpen, setIsSuggestOpen] = useState(false)
+  const { data: allPrompts } = useContent(getPrompts, [])
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
@@ -21,13 +23,15 @@ export default function AppLayout() {
       <Navbar onOpenAskAi={() => setIsAskOpen(true)} onOpenSuggest={() => setIsSuggestOpen(true)} />
 
       <main className="flex-1">
-        <Outlet context={{ openSuggest: () => setIsSuggestOpen(true) }} />
+        <div key={pathname} className="animate-fade-up">
+          <Outlet context={{ openSuggest: () => setIsSuggestOpen(true) }} />
+        </div>
       </main>
 
       <AskAiModal
         isOpen={isAskOpen}
         onClose={() => setIsAskOpen(false)}
-        allPrompts={ALL_PROMPTS}
+        allPrompts={allPrompts || []}
         onSelectPrompt={(p) => navigate(`/prompts/${p.slug}`)}
       />
       <SuggestUseCaseModal isOpen={isSuggestOpen} onClose={() => setIsSuggestOpen(false)} />
