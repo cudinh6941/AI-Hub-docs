@@ -9,6 +9,7 @@ Toàn bộ bản vẽ thiết kế tính năng và lộ trình R&D được qu�
 ## 1. Hệ Thống Subagents & Model Tiering
 - **Tier 1 (High Reasoning - Claude Opus / Sonnet)**:
   - `0-meta-architect`: Thiết kế kiến trúc agent, mở rộng nhân sự AI & SOP.
+  - `6-product-psychologist`: Nghiên cứu tâm lý học hành vi, thiết kế chiến lược tính năng, bố cục thị giác & giọng văn tối giản chuẩn Apple.
   - `1-data-architect`: Mô hình hóa Schema dữ liệu, quản lý tầng Service trừu tượng, tích hợp Database MCP/ORM.
   - `2-ui-developer`: Kỹ sư Frontend & UI/UX, chỉ đọc dữ liệu qua `src/services/contentService.js`.
 - **Tier 2 (Fast & High Quota - Claude Haiku / Gemini Flash)**:

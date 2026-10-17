@@ -4,6 +4,7 @@ title: "Tên tính năng hoặc nghiệp vụ mới"
 status: idea # idea | spec-ready | in-progress | shipped
 priority: medium # high | medium | low
 target_agents:
+  - 6-product-psychologist
   - 1-data-architect
   - 2-ui-developer
   - 3-qa-verifier
@@ -20,14 +21,15 @@ tags:
 
 ---
 
-## 1. Bài toán & Ý tưởng (Brainstorm)
-- **Nỗi đau hiện tại (Problem Statement)**:
-  - [Mô tả chi tiết vấn đề gặp phải hiện tại]
-- **Giải pháp đề xuất (Proposed Solution)**:
-  - [Mô tả giải pháp kiến trúc hoặc tính năng mới]
-- **Phạm vi tác động (Scope & User Journey)**:
-  - [Trang hoặc component bị ảnh hưởng]
-  - [Trải nghiệm người dùng thay đổi như thế nào]
+## 1. Chiến lược Hành vi & Trải nghiệm (`6-product-psychologist`)
+*Phụ trách: `6-product-psychologist` (Tier 1: Claude Opus / Skill: `behavioral-product-design`)*
+
+- **Nỗi đau & Điểm chạm nhận diện (Quiet Recognition)**:
+  - [Thao tác thừa lặp đi lặp lại nào mà người dùng đang gặp phải mỗi ngày?]
+- **Cơ chế giảm ma sát (Zero-Friction & Progressive Disclosure)**:
+  - [Làm sao để hiểu trong 3 giây đầu và thao tác xong dưới 30 giây? Đưa sẵn mẫu cấu hình/nội dung gì để người dùng không phải tự nghĩ từ trang trắng?]
+- **Ngôn ngữ & Câu chữ chuẩn tinh thần Apple (Copywriting & Micro-copy)**:
+  - [Chốt tiêu đề Eyebrow, Headline, Subhead và nhãn nút CTA — điềm tĩnh, thực tế, không emoji rác, không văn mẫu đa cấp]
 
 ---
 
