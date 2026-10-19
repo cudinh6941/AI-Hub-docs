@@ -109,3 +109,79 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
 }
+
+/* Motion & Micro-Animation System */
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes scanBeam {
+  0% { transform: translateY(-100%); opacity: 0; }
+  20% { opacity: 0.8; }
+  80% { opacity: 0.8; }
+  100% { transform: translateY(280%); opacity: 0; }
+}
+
+@keyframes shimmerHorizontal {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
+@keyframes slideCascade {
+  0% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-cursor {
+  animation: cursorBlink 0.9s infinite;
+}
+
+.animate-scan-beam {
+  animation: scanBeam 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-shimmer-h {
+  animation: shimmerHorizontal 3s ease-in-out infinite;
+}
+
+.animate-cascade-1 {
+  animation: slideCascade 0.4s ease-out 0.1s both;
+}
+
+.animate-cascade-2 {
+  animation: slideCascade 0.4s ease-out 0.25s both;
+}
+
+.animate-cascade-3 {
+  animation: slideCascade 0.4s ease-out 0.4s both;
+}
+
+/* Feature Spotlight Stage Animations */
+@keyframes tabProgress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@keyframes fileSnap {
+  0% { transform: scale(1) translateY(0); opacity: 0.8; }
+  50% { transform: scale(1.05) translateY(-8px); opacity: 1; }
+  100% { transform: scale(0.95) translateY(0); opacity: 1; }
+}
+
+@keyframes highlightSweep {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.animate-tab-progress {
+  animation: tabProgress 7.5s linear infinite;
+}
+
+.animate-file-snap {
+  animation: fileSnap 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-highlight-sweep {
+  animation: highlightSweep 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}

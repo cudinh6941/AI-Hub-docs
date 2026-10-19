@@ -1,0 +1,154 @@
+[
+  {
+    "id": "GUIDE-001",
+    "slug": "gemini-gems-tro-ly-chuyen-sau",
+    "tool": "Gemini",
+    "featureName": "Gems",
+    "title": "Tạo Trợ Lý AI Riêng Cho Công Việc (Gemini Gems)",
+    "tagline": "Mình cũng có một trợ lý riêng cho đầu việc hàng ngày à? Chỉ cần dạy quy tắc một lần để dùng lâu dài.",
+    "accountTier": "Miễn phí / Google Workspace",
+    "externalUrl": "https://gemini.google.com/gems",
+    "summary": "Tạo trợ lý cá nhân hóa có sẵn bộ nhớ quy chế công ty, giúp bạn không phải gõ lại bối cảnh mỗi khi mở cuộc trò chuyện mới.",
+    "whatItIs": "Tính năng Gems trên Gemini giúp bạn tạo ra một trợ lý chuyên trách cho một đầu việc cụ thể. Bạn có thể cài đặt sẵn vai trò, nguyên tắc làm việc và đính kèm các tệp tài liệu quy chuẩn (PDF, Word) để trợ lý luôn áp dụng đúng trong mọi lần xử lý.",
+    "problemSolved": {
+      "manual": "Mỗi lần mở phiên làm việc mới lại phải gõ lại từ đầu: 'Tôi làm ở bộ phận pháp chế, hãy kiểm tra theo quy chế công ty, chú ý các điều khoản...'",
+      "withFeature": "Trợ lý riêng đã ghi nhớ sẵn toàn bộ quy định. Bạn chỉ cần đưa văn bản dự thảo vào là nhận ngay kết quả rà soát đúng chuẩn."
+    },
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Mở mục quản lý trợ lý (Gem Manager)",
+        "description": "Truy cập Gemini trên trình duyệt, chọn 'Gem Manager' (Trình quản lý Gem) tại thanh điều hướng bên trái và nhấn 'Tạo Gem mới'.",
+        "uiLocationHint": "Thanh điều hướng trái > Gem Manager > New Gem"
+      },
+      {
+        "stepNumber": 2,
+        "title": "Dán quy tắc làm việc và đính kèm quy chế",
+        "description": "Sao chép toàn bộ cấu hình mẫu ở phần dưới vào ô hướng dẫn (Instructions). Nhấn biểu tượng đính kèm tệp để tải lên các tài liệu quy chế của phòng ban.",
+        "uiLocationHint": "Ô nhập Instructions và mục Knowledge Files"
+      },
+      {
+        "stepNumber": 3,
+        "title": "Lưu lại để sử dụng hàng ngày",
+        "description": "Nhấn 'Lưu'. Trợ lý riêng của bạn sẽ xuất hiện ngay ở thanh bên trái. Mỗi ngày chỉ cần chọn trợ lý này và gửi tài liệu cần kiểm tra.",
+        "uiLocationHint": "Nút Save góc trên bên phải"
+      }
+    ],
+    "starterBlueprint": "Bạn là Chuyên viên Thẩm định Hợp đồng & Pháp chế nội bộ của doanh nghiệp.\n\nNguyên tắc bắt buộc:\n1. Mọi điều khoản phạt vi phạm nghĩa vụ hợp đồng không được vượt quá 8% giá trị phần nghĩa vụ bị vi phạm theo Điều 301 Luật Thương mại.\n2. Kiểm tra chặt chẽ thời hạn thanh toán (mặc định 30 ngày kể từ ngày ký biên bản nghiệm thu hợp lệ).\n3. Định dạng đầu ra: Tóm tắt 3 điểm rủi ro chính, kèm đoạn văn bản đề xuất sửa đổi cụ thể.",
+    "safetyNote": "Chỉ tải lên các tài liệu quy chuẩn chung của công ty. Không tải lên các tệp chứa thông tin tài khoản ngân hàng mật hoặc mã khóa bảo mật."
+  },
+  {
+    "id": "GUIDE-002",
+    "slug": "notebooklm-tra-cuu-tai-lieu-chuyen-sau",
+    "tool": "NotebookLM",
+    "featureName": "NotebookLM",
+    "title": "Biến Tài Liệu Dài Thành Bản Tóm Tắt Có Dẫn Chứng (NotebookLM)",
+    "tagline": "Cái này tiết kiệm được bao nhiêu thời gian đọc tài liệu nhỉ? Tra cứu hàng chục trang hồ sơ kèm vị trí trang gốc.",
+    "accountTier": "Miễn phí",
+    "externalUrl": "https://notebooklm.google.com",
+    "summary": "Công cụ tra cứu và tóm tắt hồ sơ dày của Google, chỉ trả lời dựa trên những tài liệu bạn tải lên và luôn đính kèm vị trí đoạn văn gốc để đối chiếu.",
+    "whatItIs": "NotebookLM là không gian đọc hiểu tài liệu chuyên sâu. Khác với các công cụ trò chuyện thông thường, hệ thống này chỉ trích xuất thông tin từ chính các tệp tài liệu bạn cung cấp và gắn kèm số thứ tự tham chiếu dẫn thẳng về trang gốc.",
+    "problemSolved": {
+      "manual": "Phải mở từng tệp PDF dài hàng chục trang và dò tìm thủ công để lọc ra một vài con số hoặc điều kiện nghiệm thu.",
+      "withFeature": "Đặt câu hỏi bằng tiếng Việt tự nhiên, hệ thống tóm tắt ngay các ý chính kèm số tham chiếu [1], [2]; nhấp vào là mở đúng đoạn văn gốc."
+    },
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Tạo sổ tay công việc mới (New Notebook)",
+        "description": "Đăng nhập notebooklm.google.com và nhấn vào ô 'Tạo sổ tay mới'.",
+        "uiLocationHint": "Màn hình chính > Nút New Notebook"
+      },
+      {
+        "stepNumber": 2,
+        "title": "Tải lên bộ hồ sơ cần tóm tắt (Add Sources)",
+        "description": "Đưa các tệp hồ sơ mời thầu, quy chế tài chính hoặc văn bản pháp luật vào sổ tay (hỗ trợ PDF, tài liệu Word, đường dẫn trang web).",
+        "uiLocationHint": "Bảng Add Sources bên trái"
+      },
+      {
+        "stepNumber": 3,
+        "title": "Đặt câu hỏi và đối chiếu trang gốc",
+        "description": "Gõ yêu cầu tóm tắt vào ô trò chuyện. Di chuột hoặc nhấp vào các số tham chiếu [1], [2] để kiểm tra trực tiếp đoạn văn bản gốc trong hồ sơ.",
+        "uiLocationHint": "Khung hỏi đáp trung tâm"
+      }
+    ],
+    "starterBlueprint": "Dựa trên các tài liệu đã nạp, hãy tổng hợp bảng ma trận thẩm quyền phê duyệt chi phí:\n- Cột 1: Chức danh (Tổng Giám Đốc, Giám Đốc Khối, Trưởng Phòng)\n- Cột 2: Hạn mức phê duyệt tối đa (VNĐ)\n- Cột 3: Trích dẫn điều khoản và số trang cụ thể trong quy chế",
+    "safetyNote": "Dữ liệu tải lên NotebookLM trong phạm vi tài khoản doanh nghiệp được bảo vệ và không dùng để huấn luyện mô hình công cộng."
+  },
+  {
+    "id": "GUIDE-003",
+    "slug": "chatgpt-projects-khong-gian-du-an",
+    "tool": "ChatGPT",
+    "featureName": "Projects",
+    "title": "Tự Động Hóa Đầu Việc Đang Làm Thủ Công (ChatGPT Projects)",
+    "tagline": "Việc lặp đi lặp lại mỗi tuần này có thể khỏi làm tay thật à? Gom toàn bộ bảng biểu và quy trình xử lý về một nơi.",
+    "accountTier": "Plus / Team / Enterprise",
+    "externalUrl": "https://chatgpt.com",
+    "summary": "Tạo không gian làm việc cố định cho các đầu việc định kỳ, giúp máy tự động đối chiếu dữ liệu và xuất báo cáo theo đúng khuôn mẫu bạn đã thiết lập.",
+    "whatItIs": "Tính năng Projects trên ChatGPT cho phép bạn gom các tệp dữ liệu, biểu mẫu và quy tắc xử lý của một đầu việc vào chung một thư mục. Mỗi tuần hoặc mỗi tháng, bạn chỉ cần đưa bảng số liệu mới vào để hệ thống tự động thực hiện các bước phân loại và tổng hợp.",
+    "problemSolved": {
+      "manual": "Mỗi kỳ báo cáo lại phải mở nhiều bảng tính, lọc thủ công từng khoản mục quá hạn và tự gõ lại từng bức thư nhắc việc.",
+      "withFeature": "Mọi quy tắc phân loại và mẫu văn bản đã được lưu sẵn trong thư mục dự án. Chỉ cần nạp bảng theo dõi mới để nhận ngay kết quả tổng hợp."
+    },
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Tạo thư mục đầu việc (New Project)",
+        "description": "Nhấp vào mục 'Projects' trên thanh điều hướng bên trái và chọn 'New Project'.",
+        "uiLocationHint": "Thanh bên trái > Projects > New Project"
+      },
+      {
+        "stepNumber": 2,
+        "title": "Đặt tên đầu việc và tải lên biểu mẫu chuẩn",
+        "description": "Đặt tên theo nghiệp vụ (ví dụ: 'Đối soát công nợ định kỳ') và đính kèm các tệp quy định hạn mức hoặc mẫu công văn của công ty.",
+        "uiLocationHint": "Mục Project Files"
+      },
+      {
+        "stepNumber": 3,
+        "title": "Lưu quy trình xử lý tự động",
+        "description": "Dán quy trình mẫu vào mục hướng dẫn chung (Project Instructions) để mỗi lần tải bảng số liệu mới lên, hệ thống đều tự động xử lý theo đúng các bước này.",
+        "uiLocationHint": "Mục Project Instructions"
+      }
+    ],
+    "starterBlueprint": "Đầu việc: Rà soát & Đối chiếu Công nợ Khách hàng Định kỳ.\n\nQuy trình tự động thực hiện khi có bảng dữ liệu mới:\n1. Phân loại các khoản phải thu theo 4 nhóm tuổi nợ từ tệp đính kèm.\n2. Đánh dấu rõ các khoản nợ quá hạn trên 60 ngày kèm số tiền cụ thể.\n3. Soạn sẵn dự thảo văn bản đôn đốc thanh toán cho từng khách hàng quá hạn theo chuẩn mực thương mại.",
+    "safetyNote": "Nếu sử dụng tài khoản cá nhân, hãy tắt chế độ chia sẻ dữ liệu huấn luyện trong phần cài đặt bảo mật (Data Controls)."
+  },
+  {
+    "id": "GUIDE-004",
+    "slug": "canvas-artifacts-chinh-sua-truc-tiep",
+    "tool": "Canvas",
+    "featureName": "Canvas",
+    "title": "Viết Lại Văn Bản Chỉ Trong Vài Giây (Canvas)",
+    "tagline": "Hóa ra mình không cần biết viết câu lệnh phức tạp. Chỉ cần bôi đen đoạn văn lủng củng để viết lại ngay trên màn hình.",
+    "accountTier": "Miễn phí / Bản trả phí",
+    "externalUrl": "https://chatgpt.com",
+    "summary": "Màn hình soạn thảo trực quan cho phép bạn bôi đen bất kỳ câu chữ nào chưa ưng ý để viết lại lịch sự, gãy gọn hơn mà không làm ảnh hưởng tới phần còn lại của văn bản.",
+    "whatItIs": "Canvas (trên ChatGPT) hoặc Artifacts (trên Claude) mở ra một trang giấy soạn thảo riêng bên cạnh khung trò chuyện. Thay vì phải nghĩ câu lệnh dài dòng hay đọc lại cả bài viết dài từ đầu, bạn chỉ cần bôi đen đúng đoạn cần trau chuốt để sửa trực tiếp tại chỗ.",
+    "problemSolved": {
+      "manual": "Muốn sửa lại một câu trong email cho khéo léo hơn nhưng không biết diễn đạt thế nào, hoặc khi nhờ máy sửa thì máy lại viết lại toàn bộ cả trang văn bản.",
+      "withFeature": "Bôi đen đoạn ghi chú gõ vội và chọn yêu cầu ngắn gọn như 'Viết trang trọng hơn', hệ thống chỉ thay thế đúng đoạn văn đó."
+    },
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "Mở khung soạn thảo văn bản (Canvas)",
+        "description": "Dán đoạn văn bản thô vào khung làm việc và chọn chế độ mở trong bảng soạn thảo Canvas.",
+        "uiLocationHint": "Menu công cụ trong ô nhập liệu"
+      },
+      {
+        "stepNumber": 2,
+        "title": "Bôi đen câu hoặc đoạn văn cần viết lại",
+        "description": "Dùng chuột bôi đen phần câu chữ chưa ưng ý ở khung văn bản bên phải để hiện thanh công cụ chỉnh sửa nhanh.",
+        "uiLocationHint": "Khung văn bản bên phải"
+      },
+      {
+        "stepNumber": 3,
+        "title": "Chọn mức độ trau chuốt hoặc gõ yêu cầu ngắn",
+        "description": "Nhấn nút điều chỉnh giọng văn hoặc gõ ngắn gọn 'Chuyển thành văn phong gửi Ban Giám đốc', bạn cũng có thể tự gõ phím sửa trực tiếp như trên Word.",
+        "uiLocationHint": "Thanh công cụ nổi trên đoạn văn đã bôi đen"
+      }
+    ],
+    "starterBlueprint": "Hãy mở khung soạn thảo Canvas và chuyển các ý gạch đầu dòng sau thành Thư trao đổi tiến độ gửi Đối tác:\n- Hiện tại bộ phận kỹ thuật đang kiểm tra chéo số liệu nghiệm thu đợt 1\n- Dự kiến hoàn tất và gửi bộ hồ sơ chính thức trước ngày 25 tháng này\n- Đề nghị phía đối tác cử đầu mối phối hợp xác nhận biên bản",
+    "safetyNote": "Hãy sao chép văn bản hoàn chỉnh về trình soạn thảo nội bộ của công ty trước khi điền các thông tin định danh nhạy cảm."
+  }
+]

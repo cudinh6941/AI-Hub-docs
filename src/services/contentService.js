@@ -6,9 +6,11 @@
  */
 import { ALL_PROMPTS } from '../data/prompts/index.js'
 import videosData from '../data/videos.json'
+import guidesData from '../data/guides.json'
 import { getAdminHeaders } from './authService.js'
 
 const VIDEOS = videosData
+const GUIDES = guidesData
 let activeDbEngine = 'initializing'
 
 function computeStatsFromList(promptsList) {
@@ -322,4 +324,23 @@ export async function deleteVideo(id) {
   }
   return data
 }
+
+/**
+ * Returns all feature guides.
+ * @returns {Promise<Array>}
+ */
+export async function getGuides() {
+  return GUIDES
+}
+
+/**
+ * Returns a specific guide by slug.
+ * @param {string} slug
+ * @returns {Promise<Object|null>}
+ */
+export async function getGuideBySlug(slug) {
+  const g = GUIDES.find((item) => item.slug === slug)
+  return g || null
+}
+
 

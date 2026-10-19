@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { RotateCcw, Search, Plus } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { useContent } from '../hooks/useContent'
 import { getPrompts } from '../services/contentService'
 import { isAdminAuthenticated, subscribeAdminAuth } from '../services/authService'
@@ -24,7 +24,7 @@ function Select({ label, value, options, onChange }) {
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full normal-case tracking-normal text-xs bg-white border border-slate-200 rounded-md py-1.5 px-2.5 text-slate-800 font-medium focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600 outline-none cursor-pointer"
+        className="w-full normal-case tracking-normal text-xs bg-white border border-slate-200 rounded-md py-1.5 px-2.5 text-slate-800 font-medium focus:border-slate-900 focus:ring-1 focus:ring-slate-900 outline-none cursor-pointer"
       >
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
       </select>
@@ -82,9 +82,9 @@ export default function PromptsPage() {
           <button
             type="button"
             onClick={() => setIsCreateOpen(true)}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs transition-colors shrink-0"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white shadow-xs transition-colors shrink-0"
           >
-            <Plus className="w-4 h-4" /> Tạo Prompt Mới
+            Tạo Prompt Mới
           </button>
         )}
       </div>
@@ -110,7 +110,7 @@ export default function PromptsPage() {
               value={q}
               onChange={(e) => setParam('q', e.target.value, '')}
               placeholder="Lọc theo từ khóa…"
-              className="w-full text-xs pl-8 pr-3 py-1.5 rounded-lg bg-white border border-slate-200 placeholder-slate-400 focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600 outline-none"
+              className="w-full text-xs pl-8 pr-3 py-1.5 rounded-lg bg-white border border-slate-200 placeholder-slate-400 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 outline-none"
             />
           </div>
         </div>
@@ -127,8 +127,8 @@ export default function PromptsPage() {
             <strong className="text-slate-900">{results.length}</strong> công thức
           </span>
           {isFiltered && (
-            <button onClick={() => setParams({}, { replace: true })} className="inline-flex items-center gap-1 hover:text-rose-600 font-medium transition-colors">
-              <RotateCcw className="w-3.5 h-3.5" /> Đặt lại bộ lọc
+            <button onClick={() => setParams({}, { replace: true })} className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-900 font-semibold transition-colors">
+              Đặt lại bộ lọc
             </button>
           )}
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { X, Send, Sparkles, Check, HelpCircle } from 'lucide-react'
+import { X, Check } from 'lucide-react'
 import { DEPARTMENTS, TOOLS } from '../data/prompts/index.js'
 
 export default function SuggestUseCaseModal({ isOpen, onClose }) {
@@ -35,21 +35,15 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
 
       <div className="relative min-h-screen flex items-center justify-center p-4">
         <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
-          
           {/* Header */}
           <div className="p-6 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-lg bg-indigo-600 text-white flex items-center justify-center shadow-xs">
-                <Sparkles className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-base font-bold text-slate-900">
-                  Đề Xuất Bài Toán Nghiệp Vụ Mới
-                </h3>
-                <p className="text-xs text-slate-500">
-                  Tầng 1: Use Case Discovery Hub • Chuyển đổi thủ công sang AI
-                </p>
-              </div>
+            <div>
+              <h3 className="text-base font-bold text-slate-900">
+                Đề Xuất Bài Toán Nghiệp Vụ Mới
+              </h3>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Tiếp nhận nhu cầu chuyển đổi quy trình thủ công sang công thức AI
+              </p>
             </div>
 
             <button
@@ -62,7 +56,6 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="p-6 space-y-4">
-            
             {/* Department & Tool */}
             <div className="grid grid-cols-2 gap-3">
               <div>
@@ -72,7 +65,7 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
                 <select
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
-                  className="w-full text-xs p-2 rounded-lg border border-slate-200 bg-slate-50 text-slate-800 font-medium focus:bg-white focus:border-indigo-600 outline-none"
+                  className="w-full text-xs p-2 rounded-lg border border-slate-200 bg-slate-50 text-slate-800 font-medium focus:bg-white focus:border-slate-900 outline-none"
                 >
                   {DEPARTMENTS.filter(d => d !== 'Tất cả').map((dept) => (
                     <option key={dept} value={dept}>{dept}</option>
@@ -87,7 +80,7 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
                 <select
                   value={tool}
                   onChange={(e) => setTool(e.target.value)}
-                  className="w-full text-xs p-2 rounded-lg border border-slate-200 bg-slate-50 text-slate-800 font-medium focus:bg-white focus:border-indigo-600 outline-none"
+                  className="w-full text-xs p-2 rounded-lg border border-slate-200 bg-slate-50 text-slate-800 font-medium focus:bg-white focus:border-slate-900 outline-none"
                 >
                   {TOOLS.filter(t => t !== 'Tất cả').map((t) => (
                     <option key={t} value={t}>{t}</option>
@@ -107,7 +100,7 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
                 value={taskName}
                 onChange={(e) => setTaskName(e.target.value)}
                 placeholder="Ví dụ: Lập bảng đối chiếu thuế GTGT hàng tháng..."
-                className="w-full text-xs p-2.5 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600 outline-none"
+                className="w-full text-xs p-2.5 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 outline-none"
               />
             </div>
 
@@ -120,8 +113,8 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
                 rows={3}
                 value={painPoint}
                 onChange={(e) => setPainPoint(e.target.value)}
-                placeholder="Mô tả cụ thể: Dữ liệu đầu vào là gì? Bạn muốn bảng tổng hợp hay văn bản tóm tắt? Hiện tại mất bao nhiêu giờ để làm..."
-                className="w-full text-xs p-2.5 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600 outline-none resize-none"
+                placeholder="Mô tả cụ thể: Dữ liệu đầu vào là gì? Bạn muốn bảng tổng hợp hay văn bản tóm tắt?"
+                className="w-full text-xs p-2.5 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 outline-none resize-none"
               />
             </div>
 
@@ -138,7 +131,7 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
               <button
                 type="submit"
                 disabled={submitted}
-                className="px-5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm shadow-indigo-600/20"
+                className="px-5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-all flex items-center gap-2 cursor-pointer"
               >
                 {submitted ? (
                   <>
@@ -146,16 +139,11 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
                     <span>Đang gửi...</span>
                   </>
                 ) : (
-                  <>
-                    <Send className="w-3.5 h-3.5" />
-                    <span>Gửi Đề Xuất</span>
-                  </>
+                  <span>Gửi Đề Xuất</span>
                 )}
               </button>
             </div>
-
           </form>
-
         </div>
       </div>
     </div>

@@ -7,6 +7,8 @@ import PromptDetailPage from './pages/PromptDetailPage'
 import LearnPage from './pages/LearnPage'
 import VideoPage from './pages/VideoPage'
 import GovernancePage from './pages/GovernancePage'
+import GuideDetailPage from './pages/GuideDetailPage'
+import AssistantsPage from './pages/AssistantsPage'
 
 function NotFound() {
   return (
@@ -25,6 +27,8 @@ export default function App() {
           <Route index element={<HomePage />} />
           <Route path="prompts" element={<PromptsPage />} />
           <Route path="prompts/:slug" element={<PromptDetailPage />} />
+          <Route path="assistants" element={<AssistantsPage />} />
+          <Route path="guides/:slug" element={<GuideDetailPage />} />
           <Route path="learn" element={<LearnPage />} />
           <Route path="learn/:slug" element={<VideoPage />} />
           <Route path="governance" element={<GovernancePage />} />

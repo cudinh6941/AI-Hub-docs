@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react'
-import { Plus, Video, Sparkles, Search } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { useContent } from '../hooks/useContent'
 import { getVideos } from '../services/contentService'
 import { isAdminAuthenticated, subscribeAdminAuth } from '../services/authService'
@@ -42,9 +42,9 @@ export default function LearnPage() {
       {/* Top Header Row with Admin Action Button */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-50 border border-indigo-200/60 text-indigo-700 text-xs font-semibold mb-2">
-            <Video className="w-3.5 h-3.5" />
-            <span>Enterprise Learning Hub</span>
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 text-slate-700 text-xs font-medium mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-slate-900" />
+            <span>Tài liệu đào tạo nội bộ</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
             Video Học Tập & Hướng Dẫn
@@ -59,10 +59,9 @@ export default function LearnPage() {
           <div className="shrink-0">
             <button
               onClick={() => setIsCreateModalOpen(true)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition-all duration-200 hover:scale-[1.01] cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white shadow-xs transition-colors cursor-pointer"
             >
-              <Plus className="w-4 h-4" />
-              <span>+ Thêm Video Mới</span>
+              <span>Thêm Video Mới</span>
             </button>
           </div>
         )}
@@ -90,7 +89,7 @@ export default function LearnPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Tìm theo tiêu đề, công cụ, phòng ban..."
-            className="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 bg-white text-slate-800"
+            className="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-hidden focus:border-slate-900 focus:ring-1 focus:ring-slate-900 bg-white text-slate-800"
           />
           <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2" />
         </div>
@@ -103,12 +102,12 @@ export default function LearnPage() {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="rounded-xl border border-slate-200 bg-white overflow-hidden p-4 space-y-3 animate-pulse"
+              className="rounded-xl border border-slate-200 bg-white overflow-hidden p-4 space-y-3"
             >
-              <div className="aspect-video bg-slate-200 rounded-lg" />
-              <div className="h-4 bg-slate-200 rounded w-1/3" />
-              <div className="h-5 bg-slate-200 rounded w-4/5" />
-              <div className="h-3 bg-slate-100 rounded w-full" />
+              <div className="aspect-video bg-slate-100 rounded-lg" />
+              <div className="h-4 bg-slate-100 rounded w-1/3" />
+              <div className="h-5 bg-slate-100 rounded w-4/5" />
+              <div className="h-3 bg-slate-50 rounded w-full" />
             </div>
           ))}
         </div>
@@ -120,9 +119,6 @@ export default function LearnPage() {
         </div>
       ) : (
         <div className="rounded-2xl border border-slate-200 bg-slate-50/50 p-12 text-center max-w-lg mx-auto">
-          <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-3 text-slate-400">
-            <Video className="w-6 h-6" />
-          </div>
           <h3 className="text-sm font-bold text-slate-900 mb-1">Không tìm thấy video phù hợp</h3>
           <p className="text-xs text-slate-500 leading-relaxed">
             Chưa có video nào ở cấp độ <span className="font-semibold text-slate-700">"{level}"</span>
