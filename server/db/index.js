@@ -1,9 +1,12 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { createRequire } from 'node:module'
 import pg from 'pg'
 import { PGlite } from '@electric-sql/pglite'
+import { SCHEMA_SQL } from './schema.js'
 
+const require = createRequire(import.meta.url)
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const ROOT_DIR = path.resolve(__dirname, '../..')
@@ -31,26 +34,39 @@ function resolveDepartmentId(deptName) {
  * Load JSON seed files from src/data/prompts/*.json and src/data/videos.json
  */
 function loadInitialJsonData() {
-  const promptsDir = path.join(ROOT_DIR, 'src/data/prompts')
-  const jsonFiles = ['bod.json', 'finance.json', 'hr.json', 'legal.json', 'operations.json']
-  const prompts = []
+  try {
+    const bod = require('../../src/data/prompts/bod.json')
+    const fin = require('../../src/data/prompts/finance.json')
+    const hr = require('../../src/data/prompts/hr.json')
+    const leg = require('../../src/data/prompts/legal.json')
+    const ops = require('../../src/data/prompts/operations.json')
+    const videos = require('../../src/data/videos.json')
+    return {
+      prompts: [...bod, ...fin, ...hr, ...leg, ...ops],
+      videos: Array.isArray(videos) ? videos : []
+    }
+  } catch {
+    const promptsDir = path.join(ROOT_DIR, 'src/data/prompts')
+    const jsonFiles = ['bod.json', 'finance.json', 'hr.json', 'legal.json', 'operations.json']
+    const prompts = []
 
-  for (const file of jsonFiles) {
-    const fullPath = path.join(promptsDir, file)
-    if (fs.existsSync(fullPath)) {
-      const parsed = JSON.parse(fs.readFileSync(fullPath, 'utf-8'))
-      if (Array.isArray(parsed)) {
-        prompts.push(...parsed)
+    for (const file of jsonFiles) {
+      const fullPath = path.join(promptsDir, file)
+      if (fs.existsSync(fullPath)) {
+        const parsed = JSON.parse(fs.readFileSync(fullPath, 'utf-8'))
+        if (Array.isArray(parsed)) {
+          prompts.push(...parsed)
+        }
       }
     }
+
+    const videosPath = path.join(ROOT_DIR, 'src/data/videos.json')
+    const videos = fs.existsSync(videosPath)
+      ? JSON.parse(fs.readFileSync(videosPath, 'utf-8'))
+      : []
+
+    return { prompts, videos }
   }
-
-  const videosPath = path.join(ROOT_DIR, 'src/data/videos.json')
-  const videos = fs.existsSync(videosPath)
-    ? JSON.parse(fs.readFileSync(videosPath, 'utf-8'))
-    : []
-
-  return { prompts, videos }
 }
 
 /**
@@ -125,7 +141,7 @@ export function mapRowToVideo(row) {
 /**
  * Initialize Database Connection:
  * - Priority 1: Connect to PostgreSQL via process.env.DATABASE_URL
- * - Priority 2: Fallback automatically to embedded PGlite at ./database/pgdata
+ * - Priority 2: Fallback automatically to embedded PGlite
  */
 export async function getDb() {
   if (dbInstance) return { db: dbInstance, engine: activeEngine }
@@ -138,7 +154,8 @@ export async function getDb() {
       try {
         const pool = new pg.Pool({
           connectionString: databaseUrl,
-          connectionTimeoutMillis: 3500
+          connectionTimeoutMillis: 5000,
+          ssl: databaseUrl.includes('localhost') ? false : { rejectUnauthorized: false }
         })
         await pool.query('SELECT 1')
         dbInstance = {
@@ -155,7 +172,9 @@ export async function getDb() {
     }
 
     if (!dbInstance) {
-      const pgDataDir = path.join(ROOT_DIR, 'database/pgdata')
+      const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME)
+      const baseDir = isServerless ? '/tmp' : ROOT_DIR
+      const pgDataDir = path.join(baseDir, 'database/pgdata')
       fs.mkdirSync(path.dirname(pgDataDir), { recursive: true })
       const pglite = new PGlite(pgDataDir)
       await pglite.waitReady
@@ -187,9 +206,16 @@ export async function getDb() {
       console.warn('[DB Adapter] Migration check warning:', err.message)
     }
 
-    // Apply schema DDL
-    const schemaPath = path.join(__dirname, 'schema.sql')
-    const schemaSql = fs.readFileSync(schemaPath, 'utf-8')
+    // Apply schema DDL (uses inline SCHEMA_SQL with fallback to file)
+    let schemaSql = SCHEMA_SQL
+    try {
+      const schemaPath = path.join(__dirname, 'schema.sql')
+      if (fs.existsSync(schemaPath)) {
+        schemaSql = fs.readFileSync(schemaPath, 'utf-8')
+      }
+    } catch {
+      schemaSql = SCHEMA_SQL
+    }
     await dbInstance.exec(schemaSql)
 
     // Seed initial departments & prompts if empty
