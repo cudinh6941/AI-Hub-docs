@@ -16,7 +16,6 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
     if (!taskName.trim()) return
 
     setSubmitted(true)
-    // TODO: send to backend / SharePoint List when available. Currently not persisted.
     setTimeout(() => {
       setSubmitted(false)
       setTaskName('')
@@ -30,25 +29,25 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
       {/* Backdrop */}
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs transition-opacity"
+        className="fixed inset-0 bg-ink/40 transition-opacity"
       />
 
       <div className="relative min-h-screen flex items-center justify-center p-4">
-        <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+        <div className="relative w-full max-w-lg bg-paper border border-line shadow-lg overflow-hidden">
           {/* Header */}
-          <div className="p-6 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+          <div className="p-6 border-b border-line flex items-center justify-between">
             <div>
-              <h3 className="text-base font-bold text-slate-900">
-                Đề Xuất Bài Toán Nghiệp Vụ Mới
+              <h3 className="font-display text-lg font-medium text-ink">
+                Đề Xuất Bài Toán Nghiệp Vụ
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-muted mt-0.5">
                 Tiếp nhận nhu cầu chuyển đổi quy trình thủ công sang công thức AI
               </p>
             </div>
 
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer"
+              className="p-1.5 text-muted hover:text-ink transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -57,15 +56,15 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
           {/* Form */}
           <form onSubmit={handleSubmit} className="p-6 space-y-4">
             {/* Department & Tool */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-1">
-                  Phòng ban của bạn:
+                <label className="text-xs font-medium text-ink block mb-1">
+                  Phòng ban:
                 </label>
                 <select
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
-                  className="w-full text-xs p-2 rounded-lg border border-slate-200 bg-slate-50 text-slate-800 font-medium focus:bg-white focus:border-slate-900 outline-none"
+                  className="w-full text-xs p-2 bg-paper-sunken border border-line text-ink outline-none focus:border-ink transition-colors"
                 >
                   {DEPARTMENTS.filter(d => d !== 'Tất cả').map((dept) => (
                     <option key={dept} value={dept}>{dept}</option>
@@ -74,13 +73,13 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-1">
+                <label className="text-xs font-medium text-ink block mb-1">
                   Công cụ mong muốn:
                 </label>
                 <select
                   value={tool}
                   onChange={(e) => setTool(e.target.value)}
-                  className="w-full text-xs p-2 rounded-lg border border-slate-200 bg-slate-50 text-slate-800 font-medium focus:bg-white focus:border-slate-900 outline-none"
+                  className="w-full text-xs p-2 bg-paper-sunken border border-line text-ink outline-none focus:border-ink transition-colors"
                 >
                   {TOOLS.filter(t => t !== 'Tất cả').map((t) => (
                     <option key={t} value={t}>{t}</option>
@@ -91,7 +90,7 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
 
             {/* Task Name */}
             <div>
-              <label className="text-xs font-semibold text-slate-700 block mb-1">
+              <label className="text-xs font-medium text-ink block mb-1">
                 Tên tác vụ đang làm thủ công tốn thời gian:
               </label>
               <input
@@ -100,13 +99,13 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
                 value={taskName}
                 onChange={(e) => setTaskName(e.target.value)}
                 placeholder="Ví dụ: Lập bảng đối chiếu thuế GTGT hàng tháng..."
-                className="w-full text-xs p-2.5 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 outline-none"
+                className="w-full text-xs p-2.5 bg-paper-sunken border border-line text-ink placeholder-muted outline-none focus:border-ink transition-colors"
               />
             </div>
 
             {/* Pain Point Description */}
             <div>
-              <label className="text-xs font-semibold text-slate-700 block mb-1">
+              <label className="text-xs font-medium text-ink block mb-1">
                 Điểm nghẽn hoặc kết quả bạn mong muốn AI tạo ra:
               </label>
               <textarea
@@ -114,16 +113,16 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
                 value={painPoint}
                 onChange={(e) => setPainPoint(e.target.value)}
                 placeholder="Mô tả cụ thể: Dữ liệu đầu vào là gì? Bạn muốn bảng tổng hợp hay văn bản tóm tắt?"
-                className="w-full text-xs p-2.5 rounded-lg border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 outline-none resize-none"
+                className="w-full text-xs p-2.5 bg-paper-sunken border border-line text-ink placeholder-muted outline-none focus:border-ink transition-colors resize-none"
               />
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-line">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+                className="px-3 py-1.5 text-xs text-muted hover:text-ink transition-colors cursor-pointer"
               >
                 Hủy bỏ
               </button>
@@ -131,7 +130,7 @@ export default function SuggestUseCaseModal({ isOpen, onClose }) {
               <button
                 type="submit"
                 disabled={submitted}
-                className="px-5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-all flex items-center gap-2 cursor-pointer"
+                className="px-4 py-2 bg-ink hover:bg-black text-paper text-xs font-medium transition-colors flex items-center gap-2 cursor-pointer"
               >
                 {submitted ? (
                   <>

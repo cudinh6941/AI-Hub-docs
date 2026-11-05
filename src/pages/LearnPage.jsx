@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect } from 'react'
+import React from 'react'
 import { Search } from 'lucide-react'
 import { useContent } from '../hooks/useContent'
 import { getVideos } from '../services/contentService'
@@ -42,15 +43,11 @@ export default function LearnPage() {
       {/* Top Header Row with Admin Action Button */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 text-slate-700 text-xs font-medium mb-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-slate-900" />
-            <span>Tài liệu đào tạo nội bộ</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+          <h1 className="font-display text-2xl sm:text-3xl text-ink font-medium tracking-tight">
             Video Học Tập & Hướng Dẫn
           </h1>
-          <p className="text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
-            Video ngắn từ 5 đến 10 phút hướng dẫn sử dụng AI trong thực tế doanh nghiệp. Mỗi bài học đều có công thức prompt đi kèm để bạn sao chép và làm theo ngay.
+          <p className="text-sm text-body mt-1 max-w-2xl leading-relaxed">
+            Video ngắn hướng dẫn ứng dụng AI vào nghiệp vụ, kèm công thức prompt để làm theo ngay.
           </p>
         </div>
 
@@ -59,7 +56,7 @@ export default function LearnPage() {
           <div className="shrink-0">
             <button
               onClick={() => setIsCreateModalOpen(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white shadow-xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-md text-xs font-semibold bg-ink hover:bg-accent text-white transition-colors cursor-pointer"
             >
               <span>Thêm Video Mới</span>
             </button>
@@ -67,90 +64,85 @@ export default function LearnPage() {
         )}
       </div>
 
-      {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-8 animate-fade-up delay-100">
-        <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-lg w-fit overflow-x-auto">
-          {LEVELS.map((l) => (
-            <button
-              key={l}
-              onClick={() => setLevel(l)}
-              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all duration-200 whitespace-nowrap cursor-pointer ${
-                level === l ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              {l}
-            </button>
+      {/* Filter and Search Bar: Open editorial line */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-10 pb-4 border-b border-line">
+        <div className="flex items-center gap-3 text-xs overflow-x-auto">
+          <span className="text-muted">Cấp độ:</span>
+          {LEVELS.map((l, idx) => (
+            <React.Fragment key={l}>
+              {idx > 0 && <span className="text-muted">·</span>}
+              <button
+                key={l}
+                onClick={() => setLevel(l)}
+                className={`transition-colors whitespace-nowrap cursor-pointer ${
+                  level === l
+                    ? 'text-ink font-semibold underline decoration-accent underline-offset-4'
+                    : 'text-body hover:text-ink'
+                }`}
+              >
+                {l}
+              </button>
+            </React.Fragment>
           ))}
         </div>
 
         <div className="relative w-full sm:w-72">
+          <Search className="w-3.5 h-3.5 text-muted absolute left-0 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Tìm theo tiêu đề, công cụ, phòng ban..."
-            className="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-hidden focus:border-slate-900 focus:ring-1 focus:ring-slate-900 bg-white text-slate-800"
+            className="w-full pl-6 pr-2 py-1 text-xs bg-transparent border-b border-line placeholder-muted text-ink focus:border-ink outline-none"
           />
-          <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2" />
         </div>
       </div>
 
       {/* Video Content Grid */}
-      <div className="animate-fade-up delay-200">
+      <div>
         {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="rounded-xl border border-slate-200 bg-white overflow-hidden p-4 space-y-3"
-            >
-              <div className="aspect-video bg-slate-100 rounded-lg" />
-              <div className="h-4 bg-slate-100 rounded w-1/3" />
-              <div className="h-5 bg-slate-100 rounded w-4/5" />
-              <div className="h-3 bg-slate-50 rounded w-full" />
-            </div>
-          ))}
-        </div>
-      ) : list.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {list.map((v) => (
-            <VideoCard key={v.id} video={v} />
-          ))}
-        </div>
-      ) : (
-        <div className="rounded-2xl border border-slate-200 bg-slate-50/50 p-12 text-center max-w-lg mx-auto">
-          <h3 className="text-sm font-bold text-slate-900 mb-1">Không tìm thấy video phù hợp</h3>
-          <p className="text-xs text-slate-500 leading-relaxed">
-            Chưa có video nào ở cấp độ <span className="font-semibold text-slate-700">"{level}"</span>
-            {searchQuery ? ` với từ khóa "${searchQuery}"` : ''}.
-          </p>
-          {(level !== 'Tất cả' || searchQuery) && (
-            <button
-              onClick={() => {
-                setLevel('Tất cả')
-                setSearchQuery('')
-              }}
-              className="mt-4 px-3 py-1.5 text-xs font-semibold rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 shadow-2xs"
-            >
-              Xóa bộ lọc
-            </button>
-          )}
-        </div>
-      )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="space-y-3">
+                <div className="aspect-video bg-paper-sunken rounded-md" />
+                <div className="h-4 bg-paper-sunken rounded w-1/3" />
+                <div className="h-5 bg-paper-sunken rounded w-4/5" />
+              </div>
+            ))}
+          </div>
+        ) : list.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {list.map((v) => (
+              <VideoCard key={v.id} video={v} />
+            ))}
+          </div>
+        ) : (
+          <div className="py-16 text-center max-w-lg mx-auto space-y-2">
+            <h3 className="font-display text-lg text-ink font-medium">Không tìm thấy video phù hợp</h3>
+            <p className="text-xs text-muted leading-relaxed">
+              Chưa có video nào ở cấp độ <span className="text-ink font-medium">"{level}"</span>
+              {searchQuery ? ` với từ khóa "${searchQuery}"` : ''}.
+            </p>
+            {(level !== 'Tất cả' || searchQuery) && (
+              <button
+                onClick={() => {
+                  setLevel('Tất cả')
+                  setSearchQuery('')
+                }}
+                className="mt-3 text-xs text-body hover:text-accent underline underline-offset-4 decoration-line transition-colors cursor-pointer"
+              >
+                Xóa bộ lọc
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Admin Video Form Modal (Create) */}
-      {isAdmin && isCreateModalOpen && (
-        <VideoFormModal
-          isOpen={isCreateModalOpen}
-          initialVideo={null}
-          onClose={() => setIsCreateModalOpen(false)}
-          onSaved={() => {
-            setIsCreateModalOpen(false)
-            setRefreshKey((k) => k + 1)
-          }}
-        />
-      )}
+      <VideoFormModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onSaved={() => setRefreshKey((k) => k + 1)}
+      />
     </div>
   )
 }

@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom'
 import AppLayout from './components/AppLayout'
 import HomePage from './pages/HomePage'
@@ -9,12 +8,13 @@ import VideoPage from './pages/VideoPage'
 import GovernancePage from './pages/GovernancePage'
 import GuideDetailPage from './pages/GuideDetailPage'
 import AssistantsPage from './pages/AssistantsPage'
+import DataPlatformPage from './pages/DataPlatformPage'
 
 function NotFound() {
   return (
     <div className="max-w-xl mx-auto px-4 py-24 text-center">
-      <h1 className="text-xl font-bold text-slate-900 mb-2">Không tìm thấy trang</h1>
-      <Link to="/" className="text-sm font-semibold text-indigo-600 hover:text-indigo-700">← Về trang chủ</Link>
+      <h1 className="font-display text-2xl text-ink font-medium mb-2">Không tìm thấy trang</h1>
+      <Link to="/" className="text-sm text-accent hover:text-accent-hover underline transition-colors">← Về trang chủ</Link>
     </div>
   )
 }
@@ -31,6 +31,7 @@ export default function App() {
           <Route path="guides/:slug" element={<GuideDetailPage />} />
           <Route path="learn" element={<LearnPage />} />
           <Route path="learn/:slug" element={<VideoPage />} />
+          <Route path="data-platform" element={<DataPlatformPage />} />
           <Route path="governance" element={<GovernancePage />} />
           <Route path="*" element={<NotFound />} />
         </Route>

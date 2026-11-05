@@ -19,12 +19,12 @@ const SORTS = [
 
 function Select({ label, value, options, onChange }) {
   return (
-    <label className="flex items-center gap-2 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-      <span className="shrink-0">{label}</span>
+    <label className="flex items-center gap-2 text-xs text-muted">
+      <span className="shrink-0">{label}:</span>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full normal-case tracking-normal text-xs bg-white border border-slate-200 rounded-md py-1.5 px-2.5 text-slate-800 font-medium focus:border-slate-900 focus:ring-1 focus:ring-slate-900 outline-none cursor-pointer"
+        className="w-full text-xs bg-transparent border-b border-line py-1 text-ink font-medium focus:border-ink outline-none cursor-pointer"
       >
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
       </select>
@@ -73,70 +73,82 @@ export default function PromptsPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Thư viện Prompt</h1>
-          <p className="text-sm text-slate-600 mt-1">Công thức đã được phòng ban kiểm chứng. Tìm theo bài toán, phòng ban hoặc công cụ.</p>
+          <h1 className="font-display text-2xl sm:text-3xl text-ink tracking-tight font-medium">Thư viện Prompt</h1>
+          <p className="text-sm text-body mt-1">Công thức thực chiến được phòng ban kiểm chứng.</p>
         </div>
         {isAdmin && (
           <button
             type="button"
             onClick={() => setIsCreateOpen(true)}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white shadow-xs transition-colors shrink-0"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-xs font-semibold bg-ink hover:bg-accent text-white transition-colors shrink-0"
           >
             Tạo Prompt Mới
           </button>
         )}
       </div>
 
-      <div className="bg-[#FAFAFA] border border-slate-200/80 rounded-xl p-4 mb-6 space-y-3 animate-fade-up delay-100">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-1 p-1 bg-slate-200/60 rounded-lg overflow-x-auto max-w-full">
-            {SORTS.map((s) => (
-              <button
-                key={s.id}
-                onClick={() => setParam('sort', s.id, 'all')}
-                className={`px-3 py-1.5 rounded-md text-xs font-semibold whitespace-nowrap transition-all duration-200 ${
-                  sort === s.id ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                {s.label}
-              </button>
+      {/* Filter Strip: Open editorial layout without box */}
+      <div className="border-t border-b border-line py-4 mb-8 space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3 text-xs flex-wrap">
+            <span className="text-muted">Sắp xếp:</span>
+            {SORTS.map((s, idx) => (
+              <React.Fragment key={s.id}>
+                {idx > 0 && <span className="text-muted">·</span>}
+                <button
+                  type="button"
+                  onClick={() => setParam('sort', s.id, 'all')}
+                  className={`text-xs transition-colors ${
+                    sort === s.id
+                      ? 'text-ink font-semibold underline decoration-accent underline-offset-4'
+                      : 'text-body hover:text-ink'
+                  }`}
+                >
+                  {s.label}
+                </button>
+              </React.Fragment>
             ))}
           </div>
+
           <div className="relative w-full sm:w-64">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-muted absolute left-0 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               value={q}
               onChange={(e) => setParam('q', e.target.value, '')}
               placeholder="Lọc theo từ khóa…"
-              className="w-full text-xs pl-8 pr-3 py-1.5 rounded-lg bg-white border border-slate-200 placeholder-slate-400 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 outline-none"
+              className="w-full text-xs pl-6 pr-2 py-1 bg-transparent border-b border-line placeholder-muted text-ink focus:border-ink outline-none"
             />
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-200/60">
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-3 border-t border-line/60">
           <Select label="Phòng ban" value={dept} options={DEPARTMENTS} onChange={(v) => setParam('dept', v, 'Tất cả')} />
           <Select label="Công cụ" value={tool} options={TOOLS} onChange={(v) => setParam('tool', v, 'Tất cả')} />
           <Select label="Cấp độ" value={level} options={DIFFICULTIES} onChange={(v) => setParam('level', v, 'Tất cả')} />
         </div>
       </div>
 
-      <div className="animate-fade-up delay-200">
-        <div className="flex items-center justify-between mb-4 text-xs text-slate-500">
+      <div>
+        <div className="flex items-center justify-between mb-4 text-xs text-muted">
           <span>
-            <strong className="text-slate-900">{results.length}</strong> công thức
+            <strong className="text-ink font-semibold">{results.length}</strong> công thức
           </span>
           {isFiltered && (
-            <button onClick={() => setParams({}, { replace: true })} className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-900 font-semibold transition-colors">
+            <button
+              onClick={() => setParams({}, { replace: true })}
+              className="text-xs text-body hover:text-accent underline underline-offset-4 decoration-line transition-colors"
+            >
               Đặt lại bộ lọc
             </button>
           )}
         </div>
 
         {loading ? (
-          <div className="text-xs text-slate-400">Đang tải…</div>
+          <div className="text-xs text-muted">Đang tải…</div>
         ) : results.length ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="border-t border-line max-w-4xl">
             {results.map((p) => <DocRecipeCard key={p.id} prompt={p} />)}
           </div>
         ) : (

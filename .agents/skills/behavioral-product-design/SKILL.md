@@ -22,7 +22,7 @@ Sản phẩm hướng tới sự **sạch sẽ, điềm tĩnh, thông minh và t
 ### 1.1. Quy tắc Anti-AI-Slop & Anti-Hype (Cấm văn mẫu AI & Cấm giọng điệu đa cấp)
 - **Không lạm dụng Emoji trong giao diện**:
   - Tuyệt đối không rải các ký tự như `🔥`, `🚀`, `⚡`, `🤯`, `✨`, `💡`, `🎁` vào tiêu đề, nhãn (badge) hoặc nút bấm để gây chú ý.
-  - Chỉ sử dụng icon nét mảnh (`lucide-react`) ở những vị trí thực sự cần định hướng chức năng. Nếu chữ viết đã đủ rõ nghĩa, ưu tiên dùng thuần chữ (clean typography).
+  - Chỉ sử dụng icon nét mảnh (`lucide-react`) ở những vị trí thực sự cần định hướng chức năng. Nếu chữ viết đã đủ rõ nghĩa, ưu tiên dùng thuần chữ (clean typography). Quy tắc này áp dụng cho icon và emoji trang trí. Với nội dung giải thích sản phẩm, ưu tiên cho người đọc thấy kết quả thật (cặp "trước, sau", ảnh chụp kết quả đã ẩn danh) thay vì mô tả bằng đoạn văn.
 - **Danh sách từ ngữ bị cấm (Blacklist)**:
   - Cấm dùng các từ ngữ phô trương, sáo rỗng: *"Nóng hổi", "Bí mật", "Vũ khí tối thượng", "Đỉnh cao", "Siêu tốc", "Mở khóa", "X10 năng suất", "90% người dùng không biết", "Tuyệt chiêu", "Cực phẩm", "Bất ngờ chưa"*.
 - **Kiểm soát dấu câu**:

@@ -7,10 +7,12 @@
 import { ALL_PROMPTS } from '../data/prompts/index.js'
 import videosData from '../data/videos.json'
 import guidesData from '../data/guides.json'
+import dataPlatformData from '../data/dataPlatform.json'
 import { getAdminHeaders } from './authService.js'
 
 const VIDEOS = videosData
 const GUIDES = guidesData
+const DATA_PLATFORM = dataPlatformData
 let activeDbEngine = 'initializing'
 
 function computeStatsFromList(promptsList) {
@@ -343,4 +345,22 @@ export async function getGuideBySlug(slug) {
   return g || null
 }
 
-
+/**
+ * Returns the complete PTSC Hybrid Data Platform & AI Hub Executive Hub dataset.
+ * Attempts to fetch from Backend API `/api/data-platform` and falls back to static `dataPlatform.json`.
+ * @returns {Promise<Object>}
+ */
+export async function getDataPlatformData() {
+  try {
+    const res = await fetch('/api/data-platform')
+    if (res.ok) {
+      const data = await res.json()
+      if (data && typeof data === 'object') {
+        return data.dataPlatform || data
+      }
+    }
+  } catch {
+    // Fallback to static bundle if API unreachable
+  }
+  return DATA_PLATFORM
+}

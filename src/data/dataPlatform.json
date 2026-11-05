@@ -1,0 +1,362 @@
+{
+  "title": "Kiến Trúc Nền Tảng Dữ Liệu PTSC (PTSC Data Platform)",
+  "subtitle": "Sơ đồ luồng tích hợp qua Vùng 5, chốt chặn Landing Zone, cụm Hub On-Premise (Tầng 10 CQTCT) + Microsoft Cloud và luồng trả xuống 2 nhánh.",
+  "layers": [
+    {
+      "id": "sources",
+      "code": "CỘT 01",
+      "name": "Hệ thống Nguồn",
+      "sub": "Đang rà soát tại Đơn vị & CQTCT"
+    },
+    {
+      "id": "zone5_landing",
+      "code": "CỘT 02 · VÙNG 5",
+      "name": "Trục Tích Hợp & Landing Zone",
+      "sub": "4 thành phần ngang hàng & Cổng duyệt"
+    },
+    {
+      "id": "hub_onprem",
+      "code": "CỘT 03 · HUB PHẦN A",
+      "name": "Cụm On-Premise (Tầng 10 CQTCT)",
+      "sub": "dHCI 8 Nodes · 40TB→200TB+ tại VN"
+    },
+    {
+      "id": "cloud_downflow",
+      "code": "CỘT 04 · HUB PHẦN B & KHAI THÁC",
+      "name": "Microsoft Cloud & Luồng Trả Xuống",
+      "sub": "Fabric / OneLake 20TB & 2 nhánh trả về"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "src-fast",
+      "layerId": "sources",
+      "icon": "Receipt",
+      "name": "ERP FAST & Kế toán",
+      "techBadge": "Thứ tự phỏng vấn #1 · Combo 2 Adapter",
+      "statusBadge": "Hệ thống nguồn (Đang rà soát)",
+      "connections": ["v5-esb", "v5-cdc"],
+      "bullets": [
+        "Hệ thống ưu tiên phỏng vấn số 1 trong danh sách làm việc tại PTSC Quảng Ngãi (FAST → MESX → HRM → Bán hàng → Cảng → E-Office).",
+        "Theo bản nháp kế hoạch roll-out PDT27: thuộc trường hợp Combo 2 (đơn vị giữ hệ riêng 'FAST thay cho SAP' kết nối qua adapter).",
+        "Phụ lục hợp đồng số 02 (30/10/2026) không có hiệu lực hồi tố bắt nhà cung cấp cũ viết lại; hệ hiện hữu sẽ tích hợp qua dự án Data Platform."
+      ],
+      "specs": {
+        "Thứ tự phỏng vấn": "#1 (ERP FAST)",
+        "Phương án PDT27": "Combo 2 (Giữ FAST thay SAP qua Adapter)",
+        "Hiệu lực Phụ lục 02": "Không hồi tố hệ cũ · Tích hợp qua dự án DP",
+        "Nguồn đối chiếu": "Kế hoạch PDT27 (04/11/2026) & Phụ lục 02"
+      }
+    },
+    {
+      "id": "src-mesx",
+      "layerId": "sources",
+      "icon": "Wrench",
+      "name": "MESX & Phần mềm Cảng",
+      "techBadge": "Thứ tự phỏng vấn #2 & #5 · Vận hành",
+      "statusBadge": "Hệ thống nguồn (Đang rà soát)",
+      "connections": ["v5-apigw", "v5-cdc"],
+      "bullets": [
+        "Nằm trong danh sách các phần mềm làm việc tại PTSC Quảng Ngãi (chờ bộ phận IT xác nhận đầy đủ, có thể còn hệ thống ngầm).",
+        "Phục vụ quản lý sản xuất, khai thác căn cứ cảng và dịch vụ kỹ thuật tại đơn vị.",
+        "Chi phí tích hợp đắt hay rẻ tùy thuộc hệ thống đã có sẵn API/File/CDC hay là hệ đóng phải thuê nhà cung cấp mở kết nối."
+      ],
+      "specs": {
+        "Thứ tự phỏng vấn": "#2 (MESX) & #5 (Phần mềm Cảng)",
+        "Trạng thái rà soát": "Danh sách làm việc · Chờ IT xác nhận đủ",
+        "Yếu tố chi phí": "Tùy mức mở API/CDC hay hệ đóng",
+        "Nguồn đối chiếu": "Hồ sơ rà soát tại PTSC Quảng Ngãi"
+      }
+    },
+    {
+      "id": "src-hrm",
+      "layerId": "sources",
+      "icon": "Users",
+      "name": "HRM & Phần mềm Bán hàng",
+      "techBadge": "Thứ tự phỏng vấn #3 & #4 · Nội bộ",
+      "statusBadge": "Hệ thống nguồn (Đang rà soát)",
+      "connections": ["v5-esb", "v5-cdc"],
+      "bullets": [
+        "Quản lý dữ liệu nhân sự, tiền lương, tổ chức (HRM) và dữ liệu khách hàng, hợp đồng thương mại (Phần mềm Bán hàng).",
+        "Chứa dữ liệu cá nhân cần kiểm soát theo mô hình DPO 2 cấp, đánh giá tác động DPIA và ứng cứu sự cố 72 giờ (Luật BVDLCN 91/2025).",
+        "Áp dụng nguyên tắc Một nguồn duy nhất (SSOT): điều chỉnh tại hệ thống gốc, không nhập lại thủ công."
+      ],
+      "specs": {
+        "Thứ tự phỏng vấn": "#3 (HRM) & #4 (Phần mềm Bán hàng)",
+        "Miền dữ liệu MDM": "Nhân sự, Khách hàng, Hợp đồng, Đơn vị",
+        "Tuân thủ pháp lý": "Luật BVDLCN 91/2025 (Hiệu lực 01/01/2026)",
+        "Nguồn đối chiếu": "Slide Hội thảo Phiên Chiều, trang 24, 37"
+      }
+    },
+    {
+      "id": "src-eoffice",
+      "layerId": "sources",
+      "icon": "FolderKanban",
+      "name": "E-Office & Chuỗi Dự án (P1–P7)",
+      "techBadge": "Thứ tự phỏng vấn #6 · PPDM D1–D8",
+      "statusBadge": "Hành chính & Dự án",
+      "connections": ["v5-esb", "v5-apigw"],
+      "bullets": [
+        "Hệ thống văn phòng điện tử E-Office (thứ tự phỏng vấn #6) và dữ liệu quản lý dự án theo chuỗi giá trị P1–P7 / ngành hỗ trợ S1–S7.",
+        "Liên kết 8 gói sản phẩm bàn giao (Deliverables D1–D8) theo kiến trúc mã ngành kép (theo slide hội thảo: NORSOK Z-DP-002, ISO 15926, CFIHOS 2.0, VSIC 2018).",
+        "Mọi thay đổi danh mục dùng chung đều phải đối chiếu qua bảng ánh xạ 3 tầng (Mã đơn vị → Mã chuẩn PTSC → Mã chung PVN)."
+      ],
+      "specs": {
+        "Thứ tự phỏng vấn": "#6 (E-Office)",
+        "Mô hình mã ngành": "P1–P7 · S1–S7 · D1–D8 (Theo slide hội thảo)",
+        "Chuẩn tham chiếu": "PPDM · NORSOK Z-DP-002 · ISO 15926",
+        "Nguồn đối chiếu": "Slide Hội thảo Phiên Sáng, trang 35–39"
+      }
+    },
+    {
+      "id": "v5-esb",
+      "layerId": "zone5_landing",
+      "icon": "Network",
+      "name": "Vùng 5 · Trục tích hợp ESB",
+      "techBadge": "WSO2 · Request–Response & Định tuyến",
+      "statusBadge": "Vùng 5 (Ngang hàng #1)",
+      "connections": ["ing-landing", "onprem-mdm"],
+      "bullets": [
+        "Một trong 4 thành phần ngang hàng của Vùng 5 (Integration & Staging) — ESB không 'chứa' API Gateway, Kafka hay CDC/ETL.",
+        "Đảm nhiệm trao đổi giao dịch request–response, dịch giao thức/định dạng và định tuyến bản tin giữa các phần mềm.",
+        "Phụ lục hợp đồng số 02 bắt buộc mọi phần mềm mới phải tích hợp qua một ESB chung duy nhất (ngoại lệ SaaS phải được PTSC chấp thuận bằng văn bản)."
+      ],
+      "specs": {
+        "Vị trí an ninh": "Vùng 5 — Integration & Staging",
+        "Công nghệ": "WSO2 Enterprise Integrator",
+        "Vai trò cốt lõi": "Request–Response · Dịch giao thức · Định tuyến",
+        "Nguồn đối chiếu": "Slide Phiên Sáng, trang 25 & Phụ lục HĐ 02"
+      }
+    },
+    {
+      "id": "v5-apigw",
+      "layerId": "zone5_landing",
+      "icon": "GitMerge",
+      "name": "Vùng 5 · API Gateway & Kafka",
+      "techBadge": "OAuth2/mTLS · Kafka Event Stream",
+      "statusBadge": "Vùng 5 (Ngang hàng #2 & #3)",
+      "connections": ["ing-landing"],
+      "bullets": [
+        "Hai thành phần ngang hàng trong Vùng 5: API Gateway (kiểm soát truy cập API) và Apache Kafka (luồng sự kiện thời gian thực).",
+        "Theo Phụ lục hợp đồng số 02: bắt buộc xác thực OAuth2/OIDC/mTLS + SSO, API idempotent có correlationId, hỗ trợ upsert, retry và versioning interface.",
+        "Hội tụ dữ liệu sự kiện và giao dịch API về vùng đệm Landing Zone của từng đơn vị."
+      ],
+      "specs": {
+        "Vị trí an ninh": "Vùng 5 — Integration & Staging",
+        "Chuẩn bảo mật API": "OAuth2 / OIDC / mTLS + SSO",
+        "Yêu cầu kỹ thuật": "Idempotent · CorrelationId · Upsert · Retry",
+        "Nguồn đối chiếu": "Slide Phiên Sáng, trang 25 & Phụ lục HĐ 02"
+      }
+    },
+    {
+      "id": "v5-cdc",
+      "layerId": "zone5_landing",
+      "icon": "RotateCcw",
+      "name": "Vùng 5 · CDC / ETL & Kiểm tra CL",
+      "techBadge": "Airbyte · CDC · Backfill / Replay",
+      "statusBadge": "Vùng 5 (Ngang hàng #4)",
+      "connections": ["ing-landing"],
+      "bullets": [
+        "Thành phần ngang hàng thứ 4 trong Vùng 5: đồng bộ dữ liệu khối lượng lớn từ Database (CDC / ETL) kèm kiểm tra chất lượng bước đầu.",
+        "Hỗ trợ cơ chế CDC + backfill/replay lịch sử, kiểm tra quy tắc chất lượng và tách lọc danh sách lỗi trước khi nạp.",
+        "Các phương thức thu thập gồm API, Webhook/Event, CDC, Batch ETL, File (tài liệu liệt kê các phương thức, không xếp hạng ưu tiên cứng 1–5)."
+      ],
+      "specs": {
+        "Vị trí an ninh": "Vùng 5 — Integration & Staging",
+        "Công cụ thu thập": "Airbyte / CDC / ETL-ELT",
+        "Tính năng bắt buộc": "CDC + Backfill/Replay · Quarantine lỗi",
+        "Nguồn đối chiếu": "Slide Phiên Sáng, trang 18, 25 & Phụ lục 02"
+      }
+    },
+    {
+      "id": "ing-landing",
+      "layerId": "zone5_landing",
+      "icon": "ShieldCheck",
+      "name": "Landing Zone riêng Đơn vị",
+      "techBadge": "Approve / Reject · Vùng Quarantine",
+      "statusBadge": "Đơn vị là Data Owner",
+      "connections": ["onprem-lake", "onprem-mdm"],
+      "bullets": [
+        "Vùng đệm riêng biệt của từng đơn vị chứa dữ liệu thô; Đơn vị là Data Owner bấm Approve/Reject trước khi vào vùng chia sẻ (TCT không tự ý lấy dữ liệu).",
+        "Khi bị REJECT: dữ liệu nằm lại trong vùng Quarantine tại Landing Zone của đơn vị (không vào Lakehouse/MDM), trả về kèm lý do cho Data Steward + Key User sửa ở hệ nguồn rồi nộp lại.",
+        "Lưu ý: Kênh thông báo tự động, bộ phận kỹ thuật nhận và thời hạn lưu dữ liệu bị reject chưa được tài liệu quy định — là câu hỏi gửi Đoàn khảo sát."
+      ],
+      "specs": {
+        "Quyền phê duyệt": "Đơn vị (Data Owner) bấm Approve / Reject",
+        "Khi bị Reject": "Giữ tại Quarantine · Sửa ở nguồn & nộp lại",
+        "Điểm chờ làm rõ": "Kênh báo lỗi & thời hạn lưu Quarantine",
+        "Nguồn đối chiếu": "Slide Hội thảo Phiên Sáng, trang 22–24"
+      }
+    },
+    {
+      "id": "onprem-lake",
+      "layerId": "hub_onprem",
+      "icon": "Database",
+      "name": "On-Premise Lakehouse (Vùng 4 & 7)",
+      "techBadge": "dHCI 8 Nodes · MinIO / Iceberg / Parquet",
+      "statusBadge": "Tầng 10 CQTCT · 40TB→200TB+",
+      "connections": ["onprem-sec", "cloud-fabric", "down-bi"],
+      "bullets": [
+        "Đặt tại Tầng 10 CQTCT (Việt Nam) trên cụm dHCI 8 Nodes (2 Storage, 2 Processing, 1 Query+Metadata, 1 Governance+API, 1 SIEM, 1 Workflow), VMware, ~70 người dùng thường xuyên.",
+        "Vận hành trên MinIO / Apache Iceberg / Parquet, Kafka, Flink, Trino, Airflow, Veeam Backup (dung lượng ~40 TB mở rộng 200 TB+).",
+        "Quy tắc lưu trữ 3 bản / 2 bản: Dữ liệu thô lưu 3 bản trong nước (DC chính + DR + On-Prem DP) và TUYỆT ĐỐI KHÔNG LÊN CLOUD."
+      ],
+      "specs": {
+        "Cấu hình phần cứng": "dHCI 8 Nodes · ~40 TB → 200 TB+ · VMware",
+        "Phần mềm lõi": "MinIO · Apache Iceberg · Parquet · Trino · Airflow",
+        "Quy tắc dữ liệu thô": "Lưu 3 bản tại VN · Không đẩy lên Cloud",
+        "Nguồn đối chiếu": "Báo cáo Kỹ thuật, trang 55–61 & Slide Sáng, tr.18"
+      }
+    },
+    {
+      "id": "onprem-mdm",
+      "layerId": "hub_onprem",
+      "icon": "Layers",
+      "name": "Quản trị Dữ liệu chủ MDM (9 Domain)",
+      "techBadge": "10 Chức năng · Golden Record · 3 Tầng mã",
+      "statusBadge": "8 Tiêu chí chất lượng",
+      "connections": ["onprem-lake", "down-mdm"],
+      "bullets": [
+        "Thực hiện đầy đủ 10 chức năng MDM tại On-Premise cho 9 Domain: Đơn vị, Dự án, Khách hàng, Nhà cung cấp, Hợp đồng, Tài sản, Vật tư/Dịch vụ, Nhân sự, Bộ mã dùng chung.",
+        "Tạo Golden Record (Fuzzy Matching) và kiểm soát 8 tiêu chí chất lượng: Đầy đủ, Chính xác, Hợp lệ, Toàn vẹn, Kịp thời, Thống nhất, Duy nhất, Truy vết được.",
+        "Bảng ánh xạ mã 3 tầng (Mã đơn vị → Mã chuẩn PTSC → Mã chung PVN): Cột mã chuẩn PTSC và mã PVN phải ĐỂ TRỐNG cho tới khi Tổng công ty ban hành."
+      ],
+      "specs": {
+        "Phạm vi MDM": "10 chức năng · 9 Domain dữ liệu chủ",
+        "Bảng ánh xạ 3 tầng": "Mã đơn vị → Mã PTSC [Trống] → Mã PVN [Trống]",
+        "Quản trị siêu dữ liệu": "OpenMetadata · ERD & Data Dictionary",
+        "Nguồn đối chiếu": "Báo cáo KT, tr.34–37 & Slide Chiều, tr.24, 28"
+      }
+    },
+    {
+      "id": "onprem-sec",
+      "layerId": "hub_onprem",
+      "icon": "Lock",
+      "name": "An ninh 10 Vùng, SIEM & Quản trị 5 Cấp",
+      "techBadge": "Vùng 1–10 · Keycloak SSO · SIEM Tập trung",
+      "statusBadge": "Tuân thủ Pháp lý VN",
+      "connections": ["cloud-fabric", "down-bi"],
+      "bullets": [
+        "Kiến trúc 10 vùng an ninh (Internet Edge, DMZ, Security NGFW/SIEM/PKI, Server Farm, Integration Vùng 5, Shared Services, Storage, Mgmt, Backup Veeam, OOB).",
+        "Mô hình Quản trị 5 cấp: Trách nhiệm giải trình ở Cấp 3 (theo slide chiều: Trưởng Ban phê duyệt ở 10/12 quy trình số hóa); Data Steward (Cấp 4) phân theo 9 Domain.",
+        "Tuân thủ Luật An ninh mạng, NĐ 53/2022, Luật Dữ liệu 60/2024, Luật BVDLCN 91/2025; nhật ký kiểm toán từ các đơn vị chảy về SIEM tập trung."
+      ],
+      "specs": {
+        "Kiến trúc mạng": "10 Vùng an ninh (Slide Phiên Sáng, trang 25)",
+        "Định danh & Nhật ký": "Keycloak / Entra ID SSO · SIEM tập trung",
+        "Quản trị dữ liệu": "5 Cấp · 12 quy trình (Cấp 3 duyệt 10/12)",
+        "Nguồn đối chiếu": "Slide Sáng tr.25 & Slide Chiều tr.21–22, 29"
+      }
+    },
+    {
+      "id": "cloud-fabric",
+      "layerId": "cloud_downflow",
+      "icon": "Cloud",
+      "name": "Microsoft Cloud (Fabric & OneLake)",
+      "techBadge": "Fabric · OneLake 20TB · Purview 500 Assets",
+      "statusBadge": "Hub Phần B (Chỉ nhận Data Product)",
+      "connections": ["down-bi"],
+      "bullets": [
+        "Phần thứ 2 của Hub: gồm Microsoft Fabric, OneLake dung lượng 20 TB, Power BI và Microsoft Purview (500 assets).",
+        "Chỉ nhận bản sao Sản phẩm dữ liệu (Data Product) đã được làm sạch, chuẩn hóa và tổng hợp từ On-Premise đồng bộ lên (lưu 2 bản: 1 bản gốc On-Prem + 1 bản sao Cloud).",
+        "Giai đoạn 1 phục vụ phạm vi Cơ quan Tổng công ty (8 hệ thống nguồn, 20 báo cáo tự động trong tổng số 310 báo cáo hiện trạng)."
+      ],
+      "specs": {
+        "Dịch vụ Cloud": "Microsoft Fabric · OneLake 20 TB · Power BI",
+        "Quản trị Cloud": "Microsoft Purview (500 Assets) · Entra ID",
+        "Quy tắc dữ liệu": "Chỉ nhận dữ liệu đã làm sạch & chuẩn hóa",
+        "Nguồn đối chiếu": "Báo cáo Kỹ thuật, trang 51, 58–61"
+      }
+    },
+    {
+      "id": "down-mdm",
+      "layerId": "cloud_downflow",
+      "icon": "GitBranch",
+      "name": "Luồng Trả Xuống Nhánh 1: Từ MDM",
+      "techBadge": "Đồng bộ Mã chuẩn & Golden Record",
+      "statusBadge": "Down-flow Nhánh 1",
+      "connections": [],
+      "bullets": [
+        "Luồng dữ liệu trả xuống đơn vị có 2 nhánh: Nhánh 1 đi trực tiếp từ MDM trả bộ mã chuẩn và Golden Record về cho các hệ thống mà không chờ tầng khai thác.",
+        "Theo Phụ lục hợp đồng số 02: luồng 2 chiều bắt buộc đi qua ESB / API Gateway / Kafka (bao gồm cả dữ liệu chủ trả xuống).",
+        "Lưu ý: Cơ chế ghi ngược (write-back) cụ thể vào từng phần mềm nguồn của đơn vị chưa được tài liệu quy định — sẽ quyết định ở bước khảo sát và thiết kế tích hợp."
+      ],
+      "specs": {
+        "Nguồn phát": "Trực tiếp từ Phân hệ MDM (On-Premise)",
+        "Nội dung trả xuống": "Bộ mã chuẩn PTSC/PVN & Golden Record",
+        "Cơ chế Write-back": "Chờ chốt tại bước thiết kế tích hợp / khảo sát",
+        "Nguồn đối chiếu": "Slide Hội thảo & Phụ lục Hợp đồng số 02"
+      }
+    },
+    {
+      "id": "down-bi",
+      "layerId": "cloud_downflow",
+      "icon": "BarChart3",
+      "name": "Luồng Trả Xuống Nhánh 2: Khai thác BI",
+      "techBadge": "Power BI · Báo cáo & Sản phẩm dữ liệu",
+      "statusBadge": "Down-flow Nhánh 2",
+      "connections": [],
+      "bullets": [
+        "Nhánh trả xuống thứ 2 đi qua tầng khai thác: cung cấp Báo cáo thông minh Power BI, Dashboard điều hành và các Sản phẩm dữ liệu (Data Products) cho đơn vị.",
+        "Giải quyết bài toán tổng hợp 310 báo cáo định kỳ toàn Tổng công ty (Giai đoạn 1 tự động hóa 20 báo cáo tại Cơ quan Tổng công ty).",
+        "Phân quyền truy cập báo cáo chặt chẽ theo vai trò và đơn vị (RBAC / Row-Level Security), mọi truy cập đều ghi vết kiểm toán."
+      ],
+      "specs": {
+        "Nguồn phát": "Tầng Khai thác (Power BI / Data Products)",
+        "Quy mô báo cáo": "20 báo cáo GĐ1 (CQTCT) / 310 báo cáo toàn TCT",
+        "Kiểm soát truy cập": "SSO + MFA + RBAC / RLS theo Tenant đơn vị",
+        "Nguồn đối chiếu": "Slide Phiên Sáng, trang 9, 17 & Phiên Chiều, tr.35"
+      }
+    }
+  ],
+  "securityZones": [
+    { "zone": "Vùng 1", "name": "Internet Edge", "role": "Cổng kết nối biên Internet và kiểm soát lưu lượng ra/vào." },
+    { "zone": "Vùng 2", "name": "DMZ", "role": "Vùng trung gian cách ly các dịch vụ giao tiếp bên ngoài." },
+    { "zone": "Vùng 3", "name": "Security", "role": "Tường lửa thế hệ mới (NGFW), giám sát an ninh SIEM tập trung và PKI." },
+    { "zone": "Vùng 4", "name": "Internal / Server Farm", "role": "Nơi đặt cụm máy chủ Lakehouse (MinIO/Iceberg), Trino, Airflow...", "isHighlight": true },
+    { "zone": "Vùng 5", "name": "Integration & Staging", "role": "Trục tích hợp bắt buộc: API Gateway, ESB (WSO2), Kafka, Airbyte/CDC, ETL/ELT & Kiểm tra chất lượng.", "isHighlight": true },
+    { "zone": "Vùng 6", "name": "Shared Services", "role": "Dịch vụ dùng chung: Quản lý định danh IAM, SSO (Keycloak / Directory)." },
+    { "zone": "Vùng 7", "name": "Storage", "role": "Hạ tầng mạng lưu trữ chuyên dụng (SAN / Object Storage)." },
+    { "zone": "Vùng 8", "name": "Management & Operations", "role": "Quản trị vận hành hệ thống và giám sát hạ tầng." },
+    { "zone": "Vùng 9", "name": "Backup & DR", "role": "Sao lưu bất biến và khôi phục thảm họa (Veeam Backup & Replication)." },
+    { "zone": "Vùng 10", "name": "Out-of-band Management", "role": "Quản trị phần cứng máy chủ độc lập (iLO / iDRAC)." }
+  ],
+  "quangNgaiContext": {
+    "positioningTitle": "PTSC Quảng Ngãi: Nhóm 4 (Đơn vị lớn) · Mức dự kiến L3–L4 (Chốt sau khảo sát GĐ2A)",
+    "positioningSummary": "Theo Slide Hội thảo Phiên Chiều (trang 51): PTSC Quảng Ngãi thuộc Nhóm 4, mức kiến trúc dự kiến là L3–L4 (chưa chốt cứng). Mức L3 (Tenant riêng trên Hub) là phương án mặc định hợp lý; Mức L4 (Spoke riêng tại đơn vị) chỉ áp dụng khi đủ 4 tiêu chí tốt nghiệp và đơn vị chấp nhận tự chi trả đầu tư cụm dHCI cùng đội ngũ vận hành dài hạn.",
+    "graduationCriteria": [
+      "1. Khối lượng và tốc độ tăng dữ liệu thô đẩy về Hub tốn kém hơn xử lý tại chỗ.",
+      "2. Nhu cầu phân tích chuyên ngành / thời gian thực cường độ cao tại đơn vị.",
+      "3. Ràng buộc pháp lý hoặc hợp đồng khách hàng bắt buộc lưu trữ dữ liệu tại chỗ.",
+      "4. Đội ngũ CNTT của đơn vị đủ năng lực tự vận hành hạ tầng Data Platform dài hạn."
+    ],
+    "costRules": [
+      "Nhóm 1 (Tổng công ty đầu tư): Toàn bộ hạ tầng Hub trung tâm (ESB, MDM, Lakehouse, bộ tiêu chuẩn) theo Phương án 3.",
+      "Nhóm 2 (Đơn vị chi trả 2/7 cấu phần): (a) Chi phí tích hợp các hệ thống phần mềm riêng của đơn vị, và (b) Chi phí thiết kế/triển khai dữ liệu của đơn vị.",
+      "Nhóm 3 (Yếu tố quyết định chi phí): Phụ thuộc vào từng phần mềm — hệ có sẵn API/File/CDC thì chi phí thấp (cấu hình + ánh xạ mã); hệ đóng phải thuê nhà cung cấp mở kết nối thì chi phí cao hơn. (Ước tính chỉ có sau khảo sát GĐ2A)."
+    ],
+    "mdmMappingSample": [
+      { "domain": "1. Đơn vị (Organization)", "unitCode": "PTSC-QNG (Mã đang dùng tại FAST/HRM)", "ptscStandardCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]", "pvnCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]" },
+      { "domain": "2. Dự án (Project)", "unitCode": "Mã dự án nội bộ tại đơn vị", "ptscStandardCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]", "pvnCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]" },
+      { "domain": "3. Khách hàng (Customer)", "unitCode": "Mã KH trên FAST / PM Bán hàng", "ptscStandardCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]", "pvnCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]" },
+      { "domain": "4. Nhà cung cấp (Vendor)", "unitCode": "Mã NCC hiện hữu tại đơn vị", "ptscStandardCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]", "pvnCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]" },
+      { "domain": "5. Hợp đồng (Contract)", "unitCode": "Số/Mã hợp đồng tại đơn vị", "ptscStandardCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]", "pvnCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]" },
+      { "domain": "6. Tài sản (Asset)", "unitCode": "Mã TSCĐ / Thiết bị cảng & xưởng", "ptscStandardCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]", "pvnCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]" },
+      { "domain": "7. Vật tư / Dịch vụ (Material)", "unitCode": "Mã vật tư kho / mua sắm", "ptscStandardCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]", "pvnCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]" },
+      { "domain": "8. Nhân sự (Employee)", "unitCode": "Mã NV trên phần mềm HRM", "ptscStandardCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]", "pvnCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]" },
+      { "domain": "9. Bộ mã dùng chung (Common)", "unitCode": "Mã tiền tệ, ĐVT, khu đất, bảo lãnh...", "ptscStandardCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]", "pvnCode": "[ĐỂ TRỐNG — Chờ TCT ban hành]" }
+    ],
+    "actionsNow": [
+      "1. Hoàn tất phỏng vấn các hệ thống đang rà soát theo thứ tự: FAST → MESX → HRM → Bán hàng → Cảng → E-Office (chờ IT xác nhận đầy đủ hệ ngầm).",
+      "2. Thu thập danh sách mã đã xuất từ các phần mềm và lập bảng ánh xạ 3 tầng (giữ trống cột mã chuẩn PTSC và mã PVN).",
+      "3. Cử Chủ quản dữ liệu (Cấp 3) và Data Steward (Cấp 4) theo đúng 9 Domain dữ liệu chủ (không phân theo phần mềm) + đầu mối DPO cấp đơn vị.",
+      "4. Chuẩn bị phương án đăng ký Combo 1 / Combo 2 (ví dụ giữ FAST qua adapter) và giữ sẵn hồ sơ phục vụ Đoàn khảo sát GĐ2A.",
+      "5. Nguyên tắc KHÔNG LÀM: Không tự xây platform riêng; không thuê nhà cung cấp làm pipeline khi chưa chốt mức L3/L4; không tự bịa mã chuẩn, số tiền hay mốc ngày cam kết."
+    ],
+    "openQuestionsForSurveyTeam": [
+      "1. Đăng ký Combo (Combo 1 / Combo 2) và Nhóm triển khai: Đăng ký ở đâu, bằng biểu mẫu/hình thức nào và gửi cho đầu mối nào của Taskforce?",
+      "2. Xử lý dữ liệu bị Reject tại Landing Zone: Kênh thông báo tự động là gì, bộ phận kỹ thuật nào tiếp nhận và thời hạn lưu giữ tại vùng Quarantine là bao lâu?",
+      "3. Luồng trả xuống (Down-flow): Cơ chế ghi ngược (write-back) bộ mã chuẩn MDM về từng phần mềm hiện hữu (FAST, MESX, HRM...) sẽ thực hiện theo phương thức nào?"
+    ]
+  }
+}

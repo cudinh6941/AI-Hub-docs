@@ -171,24 +171,24 @@ export default function PromptFormModal({ isOpen, onClose, initialPrompt = null,
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-xs p-3 sm:p-6 overflow-y-auto">
-      <div className="w-full max-w-4xl rounded-2xl bg-white border border-slate-200 shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 p-3 sm:p-6 overflow-y-auto">
+      <div className="w-full max-w-4xl rounded-2xl bg-paper border border-line shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50/80 shrink-0">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-line bg-paper-sunken/80 shrink-0">
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-slate-200 text-slate-800">
+              <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-line text-ink">
                 Smart R-C-T-C-F Studio
               </span>
               {isEdit && (
-                <span className="text-xs font-mono font-semibold text-slate-500">#{initialPrompt.id}</span>
+                <span className="text-xs font-mono font-semibold text-muted">#{initialPrompt.id}</span>
               )}
             </div>
-            <h2 className="text-base font-bold text-slate-900 mt-0.5">
+            <h2 className="text-base font-bold text-ink mt-0.5">
               {isEdit ? 'Chỉnh sửa Công thức Prompt' : 'Tạo Công thức Prompt Mới'}
             </h2>
           </div>
-          <button onClick={onClose} className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100">
+          <button onClick={onClose} className="p-1.5 rounded-lg text-muted hover:text-body hover:bg-paper-sunken">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -197,13 +197,13 @@ export default function PromptFormModal({ isOpen, onClose, initialPrompt = null,
         <form onSubmit={handleSubmit} className="p-6 overflow-y-auto space-y-5 flex-1">
           {/* Real-time Data Sanitization Guardrail Banner */}
           {!piiReport.clean ? (
-            <div className="p-4 rounded-xl bg-slate-100 border border-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="text-xs text-slate-900">
+            <div className="p-4 rounded-xl bg-paper-sunken border border-line flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="text-xs text-ink">
                 <p className="font-bold">Cảnh báo Data Sanitization: Phát hiện {piiReport.findings.length} thông tin nhạy cảm (PII)!</p>
-                <ul className="mt-1 space-y-0.5 text-[11px] list-disc list-inside text-slate-700">
+                <ul className="mt-1 space-y-0.5 text-[11px] list-disc list-inside text-body">
                   {piiReport.findings.slice(0, 4).map((f, idx) => (
                     <li key={idx}>
-                      <strong>{f.field}</strong>: Phát hiện {f.label} (<code className="bg-slate-200 px-1 rounded">{f.match}</code>) → Gợi ý thay bằng <code className="bg-white px-1 rounded border border-slate-200">{f.suggestion}</code>
+                      <strong>{f.field}</strong>: Phát hiện {f.label} (<code className="bg-line px-1 rounded">{f.match}</code>) → Gợi ý thay bằng <code className="bg-paper px-1 rounded border border-line">{f.suggestion}</code>
                     </li>
                   ))}
                 </ul>
@@ -211,18 +211,18 @@ export default function PromptFormModal({ isOpen, onClose, initialPrompt = null,
               <button
                 type="button"
                 onClick={handleAutoSanitize}
-                className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white shadow-xs transition-colors"
+                className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-ink hover:bg-black text-white shadow-xs transition-colors"
               >
                 Ẩn danh tự động
               </button>
             </div>
           ) : (
-            <div className="px-3.5 py-2 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-between text-xs text-slate-700">
+            <div className="px-3.5 py-2 rounded-lg bg-paper-sunken border border-line flex items-center justify-between text-xs text-body">
               <span className="inline-flex items-center gap-1.5 font-medium">
-                <Check className="w-3.5 h-3.5 text-slate-700" />
+                <Check className="w-3.5 h-3.5 text-body" />
                 Kiểm duyệt Data Sanitization: An toàn (Không phát hiện Email thật, SĐT hay IP nội bộ).
               </span>
-              <span className="text-[11px] font-mono text-slate-500">
+              <span className="text-[11px] font-mono text-muted">
                 Slug: /{currentPayload.slug || '...'}
               </span>
             </div>
@@ -231,44 +231,44 @@ export default function PromptFormModal({ isOpen, onClose, initialPrompt = null,
           {/* Basic Metadata Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="sm:col-span-3">
-              <label className="block text-xs font-bold text-slate-800 mb-1">Tiêu đề bài toán *</label>
+              <label className="block text-xs font-bold text-ink mb-1">Tiêu đề bài toán *</label>
               <input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="VD: Phân tích Biến động Chi phí Vận hành Tháng..."
                 required
-                className="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600 outline-none"
+                className="w-full text-xs px-3 py-2 rounded-lg border border-line focus:border-ink outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Phòng ban *</label>
+              <label className="block text-xs font-bold text-ink mb-1">Phòng ban *</label>
               <select
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
-                className="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 bg-white focus:border-indigo-600 outline-none"
+                className="w-full text-xs px-3 py-2 rounded-lg border border-line bg-paper focus:border-ink outline-none"
               >
                 {DEPARTMENT_OPTIONS.map((d) => <option key={d} value={d}>{d}</option>)}
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Công cụ AI khuyến nghị</label>
+              <label className="block text-xs font-bold text-ink mb-1">Công cụ AI khuyến nghị</label>
               <select
                 value={tool}
                 onChange={(e) => setTool(e.target.value)}
-                className="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 bg-white focus:border-indigo-600 outline-none"
+                className="w-full text-xs px-3 py-2 rounded-lg border border-line bg-paper focus:border-ink outline-none"
               >
                 {TOOL_OPTIONS.map((t) => <option key={t} value={t}>{t}</option>)}
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Độ khó</label>
+              <label className="block text-xs font-bold text-ink mb-1">Độ khó</label>
               <select
                 value={difficulty}
                 onChange={(e) => setDifficulty(e.target.value)}
-                className="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 bg-white focus:border-indigo-600 outline-none"
+                className="w-full text-xs px-3 py-2 rounded-lg border border-line bg-paper focus:border-ink outline-none"
               >
                 {DIFFICULTY_OPTIONS.map((d) => <option key={d} value={d}>{d}</option>)}
               </select>
@@ -276,58 +276,58 @@ export default function PromptFormModal({ isOpen, onClose, initialPrompt = null,
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-800 mb-1">Tóm tắt giá trị (Summary) *</label>
+            <label className="block text-xs font-bold text-ink mb-1">Tóm tắt giá trị (Summary) *</label>
             <input
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
               placeholder="Mô tả ngắn gọn trong 1-2 câu công thức này giải quyết nỗi đau gì..."
-              className="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 focus:border-indigo-600 outline-none"
+              className="w-full text-xs px-3 py-2 rounded-lg border border-line focus:border-ink outline-none"
             />
           </div>
 
           {/* R-C-T-C-F Guided Context Assistant */}
-          <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4 space-y-3">
+          <div className="rounded-xl border border-line bg-paper-sunken/60 p-4 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-900">
+              <span className="text-xs font-bold text-ink">
                 Trợ lý Xây dựng Ngữ cảnh Chuẩn R-C-T-C-F (Giải quyết bài toán thiếu Context)
               </span>
               <button
                 type="button"
                 onClick={() => setShowRctcfBuilder(!showRctcfBuilder)}
-                className="text-xs font-semibold text-slate-700 hover:text-slate-900 underline"
+                className="text-xs font-semibold text-body hover:text-ink underline"
               >
                 {showRctcfBuilder ? 'Thu gọn bộ gợi ý' : 'Mở bộ gợi ý 5 thành tố'}
               </button>
             </div>
 
             {showRctcfBuilder && (
-              <div className="space-y-3 pt-2 border-t border-slate-200">
+              <div className="space-y-3 pt-2 border-t border-line">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                    <label className="block text-[11px] font-semibold text-body mb-1">
                       1. Role (Đóng vai chuyên gia nào?)
                     </label>
                     <input
                       value={rctcf.role}
                       onChange={(e) => setRctcf({ ...rctcf, role: e.target.value })}
                       placeholder="VD: Giám đốc Tài chính (CFO) 15 năm kinh nghiệm..."
-                      className="w-full text-xs px-2.5 py-1.5 rounded-md bg-white border border-slate-200"
+                      className="w-full text-xs px-2.5 py-1.5 rounded-md bg-paper border border-line"
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                    <label className="block text-[11px] font-semibold text-body mb-1">
                       2. Context (Bối cảnh & Dữ liệu đầu vào có biến [BIẾN])
                     </label>
                     <input
                       value={rctcf.context}
                       onChange={(e) => setRctcf({ ...rctcf, context: e.target.value })}
                       placeholder="VD: Dựa trên báo cáo [BÁO_CÁO_QUÝ] của bộ phận [PHÒNG_BAN]..."
-                      className="w-full text-xs px-2.5 py-1.5 rounded-md bg-white border border-slate-200"
+                      className="w-full text-xs px-2.5 py-1.5 rounded-md bg-paper border border-line"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                  <label className="block text-[11px] font-semibold text-body mb-1">
                     3. Task (Các bước nhiệm vụ cụ thể cần AI thực hiện)
                   </label>
                   <textarea
@@ -335,30 +335,30 @@ export default function PromptFormModal({ isOpen, onClose, initialPrompt = null,
                     value={rctcf.task}
                     onChange={(e) => setRctcf({ ...rctcf, task: e.target.value })}
                     placeholder="VD: Phân tích 3 nguyên nhân gây lệch ngân sách và đề xuất phương án cắt giảm..."
-                    className="w-full text-xs px-2.5 py-1.5 rounded-md bg-white border border-slate-200"
+                    className="w-full text-xs px-2.5 py-1.5 rounded-md bg-paper border border-line"
                   />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                    <label className="block text-[11px] font-semibold text-body mb-1">
                       4. Constraints (Ràng buộc & Những điều cấm)
                     </label>
                     <input
                       value={rctcf.constraints}
                       onChange={(e) => setRctcf({ ...rctcf, constraints: e.target.value })}
                       placeholder="VD: Không suy diễn số liệu, tối đa 400 từ, văn phong súc tích..."
-                      className="w-full text-xs px-2.5 py-1.5 rounded-md bg-white border border-slate-200"
+                      className="w-full text-xs px-2.5 py-1.5 rounded-md bg-paper border border-line"
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                    <label className="block text-[11px] font-semibold text-body mb-1">
                       5. Format (Định dạng bảng biểu / đầu ra mong muốn)
                     </label>
                     <input
                       value={rctcf.format}
                       onChange={(e) => setRctcf({ ...rctcf, format: e.target.value })}
                       placeholder="VD: Xuất bảng Markdown gồm 4 cột: Hạng mục, Chênh lệch, Rủi ro, Hành động..."
-                      className="w-full text-xs px-2.5 py-1.5 rounded-md bg-white border border-slate-200"
+                      className="w-full text-xs px-2.5 py-1.5 rounded-md bg-paper border border-line"
                     />
                   </div>
                 </div>
@@ -366,7 +366,7 @@ export default function PromptFormModal({ isOpen, onClose, initialPrompt = null,
                   <button
                     type="button"
                     onClick={applyRctcfToTemplate}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-ink hover:bg-black text-white transition-colors"
                   >
                     Ghép 5 thành tố vào Câu lệnh chính
                   </button>
@@ -378,10 +378,10 @@ export default function PromptFormModal({ isOpen, onClose, initialPrompt = null,
           {/* Main Prompt Template + Auto Variable Extractor */}
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="block text-xs font-bold text-slate-800">
-                Nội dung Câu lệnh (Prompt Template) * — Dùng <code className="text-slate-900 font-semibold">[TÊN_BIẾN]</code> để tạo ô điền tự động
+              <label className="block text-xs font-bold text-ink">
+                Nội dung Câu lệnh (Prompt Template) * — Dùng <code className="text-ink font-semibold">[TÊN_BIẾN]</code> để tạo ô điền tự động
               </label>
-              <span className="text-[11px] text-slate-500">
+              <span className="text-[11px] text-muted">
                 Tự động nhận diện <strong>{detectedVariables.length}</strong> biến số
               </span>
             </div>
@@ -391,13 +391,13 @@ export default function PromptFormModal({ isOpen, onClose, initialPrompt = null,
               onChange={(e) => setPromptTemplate(e.target.value)}
               required
               placeholder="Đóng vai trò là... Hãy phân tích [DỮ_LIỆU_ĐẦU_VÀO] theo mục tiêu [MỤC_TIÊU]..."
-              className="w-full font-mono text-xs p-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-slate-900 focus:ring-1 focus:ring-slate-900 outline-none leading-relaxed"
+              className="w-full font-mono text-xs p-3 rounded-xl border border-line bg-paper-sunken focus:bg-paper focus:border-ink outline-none leading-relaxed"
             />
             {detectedVariables.length > 0 && (
               <div className="flex flex-wrap items-center gap-1.5 mt-2">
-                <span className="text-[11px] font-medium text-slate-500">Biến động tự tách:</span>
+                <span className="text-[11px] font-medium text-muted">Biến động tự tách:</span>
                 {detectedVariables.map((v) => (
-                  <span key={v} className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-slate-100 text-slate-700 border border-slate-200">
+                  <span key={v} className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-paper-sunken text-body border border-line">
                     [{v}]
                   </span>
                 ))}
@@ -408,67 +408,67 @@ export default function PromptFormModal({ isOpen, onClose, initialPrompt = null,
           {/* Before / After & Why Effective */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Ví dụ Đầu vào (Input Sample)</label>
+              <label className="block text-xs font-bold text-ink mb-1">Ví dụ Đầu vào (Input Sample)</label>
               <textarea
                 rows={3}
                 value={inputSample}
                 onChange={(e) => setInputSample(e.target.value)}
                 placeholder="Mô tả dữ liệu mẫu đầu vào (đã ẩn danh PII)..."
-                className="w-full text-xs p-2.5 rounded-lg border border-slate-200 focus:border-slate-900 outline-none"
+                className="w-full text-xs p-2.5 rounded-lg border border-line focus:border-ink outline-none"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Kết quả Mẫu (Output Sample)</label>
+              <label className="block text-xs font-bold text-ink mb-1">Kết quả Mẫu (Output Sample)</label>
               <textarea
                 rows={3}
                 value={outputSample}
                 onChange={(e) => setOutputSample(e.target.value)}
                 placeholder="Mô tả kết quả chuẩn do AI sinh ra..."
-                className="w-full text-xs p-2.5 rounded-lg border border-slate-200 focus:border-slate-900 outline-none"
+                className="w-full text-xs p-2.5 rounded-lg border border-line focus:border-ink outline-none"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Vì sao công thức này hiệu quả?</label>
+              <label className="block text-xs font-bold text-ink mb-1">Vì sao công thức này hiệu quả?</label>
               <input
                 value={whyEffective}
                 onChange={(e) => setWhyEffective(e.target.value)}
                 placeholder="Giải thích ngắn gọn kỹ thuật Prompt đã áp dụng..."
-                className="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 focus:border-slate-900 outline-none"
+                className="w-full text-xs px-3 py-2 rounded-lg border border-line focus:border-ink outline-none"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Tags (cách nhau bằng dấu phẩy)</label>
+              <label className="block text-xs font-bold text-ink mb-1">Tags (cách nhau bằng dấu phẩy)</label>
               <input
                 value={tagsInput}
                 onChange={(e) => setTagsInput(e.target.value)}
                 placeholder="VD: bao cao, tai chinh, copilot, rctcf"
-                className="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 focus:border-slate-900 outline-none"
+                className="w-full text-xs px-3 py-2 rounded-lg border border-line focus:border-ink outline-none"
               />
             </div>
           </div>
 
           {error && (
-            <div className="p-3 rounded-lg bg-slate-100 border border-slate-300 text-xs text-slate-900 font-medium">
+            <div className="p-3 rounded-lg bg-paper-sunken border border-line text-xs text-ink font-medium">
               {error}
             </div>
           )}
 
           {/* Footer CTA */}
-          <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
+          <div className="flex items-center justify-end gap-2 pt-3 border-t border-line">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-100"
+              className="px-4 py-2 rounded-lg text-xs font-medium text-body hover:bg-paper-sunken"
             >
               Hủy
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-xs font-bold bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white transition-colors"
+              className="inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-xs font-bold bg-ink hover:bg-black disabled:opacity-50 text-white transition-colors"
             >
               <Check className="w-3.5 h-3.5" />
               {submitting ? 'Đang lưu vào PostgreSQL…' : isEdit ? 'Lưu thay đổi' : 'Xuất bản Prompt'}

@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import {
-  ChevronRight,
   Play,
   Copy,
-  Check,
-  ArrowRight
+  Check
 } from 'lucide-react'
 import { useContent } from '../hooks/useContent'
 import { getVideoBySlug, deleteVideo, getPrompts } from '../services/contentService'
@@ -74,7 +72,6 @@ export default function VideoPage() {
     const seconds = parseTimeToSeconds(chapter.time)
 
     if (iframeRef.current && iframeRef.current.contentWindow) {
-      // Standard YouTube IFrame API seek command
       iframeRef.current.contentWindow.postMessage(
         JSON.stringify({
           event: 'command',
@@ -114,10 +111,8 @@ export default function VideoPage() {
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-20 text-center">
-        <div className="inline-flex items-center gap-2 text-xs text-slate-400 font-medium">
-          Đang tải nội dung video học tập…
-        </div>
+      <div className="max-w-7xl mx-auto px-4 py-20 text-center text-xs text-muted">
+        Đang tải nội dung video học tập…
       </div>
     )
   }
@@ -125,11 +120,11 @@ export default function VideoPage() {
   if (!video) {
     return (
       <div className="max-w-xl mx-auto px-4 py-24 text-center">
-        <h1 className="text-xl font-bold text-slate-900 mb-2">Không tìm thấy video</h1>
-        <p className="text-xs text-slate-500 mb-5">Video bạn đang tìm kiếm có thể đã bị xóa hoặc đổi đường dẫn.</p>
+        <h1 className="font-display text-2xl font-medium text-ink mb-2">Không tìm thấy video</h1>
+        <p className="text-sm text-body mb-6">Video bạn đang tìm kiếm có thể đã bị xóa hoặc đổi đường dẫn.</p>
         <Link
           to="/learn"
-          className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition-colors"
+          className="text-sm font-semibold text-ink hover:text-accent underline underline-offset-4 decoration-line transition-colors"
         >
           ← Về trang học tập
         </Link>
@@ -138,37 +133,34 @@ export default function VideoPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Breadcrumb Navigation & Admin Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <nav className="flex items-center gap-1.5 text-xs text-slate-500 min-w-0">
-          <Link to="/" className="hover:text-slate-900 shrink-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <nav className="flex items-center gap-2 text-xs text-muted min-w-0">
+          <Link to="/" className="hover:text-ink shrink-0">
             Trang chủ
           </Link>
-          <ChevronRight className="w-3 h-3 shrink-0" />
-          <Link to="/learn" className="hover:text-slate-900 shrink-0">
+          <span>/</span>
+          <Link to="/learn" className="hover:text-ink shrink-0">
             Học tập
           </Link>
-          <ChevronRight className="w-3 h-3 shrink-0" />
-          <span className="text-slate-900 font-medium truncate">{video.title}</span>
+          <span>/</span>
+          <span className="text-ink font-medium truncate">{video.title}</span>
         </nav>
 
         {/* Admin Action Buttons */}
         {isAdmin && (
           <div className="flex items-center gap-2 shrink-0">
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">
-              Admin Mode
-            </span>
             <button
               onClick={() => setIsEditModalOpen(true)}
-              className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-md bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:border-slate-300 hover:bg-slate-50 shadow-2xs transition-all"
+              className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-md border border-line text-body hover:border-ink hover:text-ink transition-colors"
             >
               Chỉnh sửa Video
             </button>
             <button
               onClick={handleDelete}
               disabled={deleting}
-              className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-md bg-slate-100 border border-slate-200 text-slate-700 hover:bg-slate-900 hover:text-white shadow-2xs transition-all disabled:opacity-50"
+              className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-md bg-paper-sunken border border-line text-body hover:bg-ink hover:text-white transition-colors disabled:opacity-50"
             >
               {deleting ? 'Đang xóa...' : 'Xóa Video'}
             </button>
@@ -176,11 +168,11 @@ export default function VideoPage() {
         )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        <div className="lg:col-span-2 space-y-8 min-w-0 animate-fade-up delay-100">
-          {/* Video Player Display: YouTube IFrame or Embed or Monochrome Slate Stage */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <div className="lg:col-span-8 space-y-10 min-w-0">
+          {/* Video Player Display */}
           {youtubeId ? (
-            <div className="relative aspect-video rounded-xl overflow-hidden border border-slate-200 bg-black shadow-sm group">
+            <div className="relative aspect-video rounded-md overflow-hidden border border-line bg-black">
               <iframe
                 ref={iframeRef}
                 id="youtube-player"
@@ -192,7 +184,7 @@ export default function VideoPage() {
               />
             </div>
           ) : isEmbed ? (
-            <div className="aspect-video rounded-xl overflow-hidden border border-slate-200 bg-black shadow-sm">
+            <div className="aspect-video rounded-md overflow-hidden border border-line bg-black">
               <iframe
                 src={video.source.url}
                 title={video.title}
@@ -201,123 +193,95 @@ export default function VideoPage() {
               />
             </div>
           ) : (
-            <div className="relative aspect-video rounded-xl bg-slate-900 border border-slate-800 flex flex-col items-center justify-center text-white shadow-sm">
-              <div className="absolute inset-0 dot-pattern opacity-15 rounded-xl" />
-              <div className="relative w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg">
-                <Play className="w-6 h-6 text-slate-900 ml-0.5" fill="currentColor" />
+            <div className="relative aspect-video rounded-md bg-ink flex flex-col items-center justify-center text-white">
+              <div className="w-14 h-14 rounded-full bg-paper flex items-center justify-center text-ink">
+                <Play className="w-6 h-6 ml-0.5" fill="currentColor" />
               </div>
-              <p className="relative mt-4 text-xs bg-slate-800 border border-slate-700 px-3.5 py-1.5 rounded-md text-slate-300 font-mono">
+              <p className="mt-4 text-xs font-mono text-muted">
                 Nguồn phát: {video.source?.provider || 'SharePoint / Stream'}
               </p>
             </div>
           )}
 
           {/* Video Header & Meta */}
-          <header className="space-y-2">
-            <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
-              <span className="font-semibold text-slate-800 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded">
+          <header className="space-y-3">
+            <div className="flex flex-wrap items-center gap-2 text-xs text-muted">
+              <span className="font-medium text-ink">
                 {video.department}
               </span>
               <span>·</span>
-              <span className="font-medium text-slate-700">{video.tool}</span>
+              <span>{video.tool}</span>
               <span>·</span>
               <span>{video.level}</span>
               <span>·</span>
               <span>{video.durationMinutes} phút</span>
-              {youtubeId && (
-                <>
-                  <span>·</span>
-                  <span className="font-mono text-slate-600">YouTube HD</span>
-                </>
-              )}
             </div>
 
-            <h1 className="text-2xl font-bold text-slate-900 tracking-tight leading-snug">
+            <h1 className="font-display text-2xl sm:text-3xl font-medium text-ink tracking-tight leading-snug">
               {video.title}
             </h1>
-            <p className="text-sm text-slate-600 leading-relaxed pt-1">{video.summary}</p>
+            <p className="text-sm text-body leading-relaxed">{video.summary}</p>
           </header>
 
           {/* Interactive Chapters Section */}
-          <section className="space-y-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-sm font-bold text-slate-900">
-                  Nội dung & Mốc thời gian (Interactive Chapters)
-                </h2>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Bấm vào bất kỳ dòng nào bên dưới để tua video tới đúng đoạn cần xem.
-                </p>
-              </div>
+          <section className="border-t border-line pt-8 space-y-4">
+            <div>
+              <h2 className="font-display text-xl text-ink font-medium">
+                Nội dung và mốc thời gian
+              </h2>
+              <p className="text-xs text-muted mt-1">
+                Bấm vào dòng bất kỳ để tua video tới đoạn tương ứng.
+              </p>
             </div>
 
             {Array.isArray(video.chapters) && video.chapters.length > 0 ? (
-              <div className="divide-y divide-slate-100 border border-slate-200/80 rounded-xl overflow-hidden bg-white shadow-2xs">
+              <div className="border-t border-line divide-y divide-line">
                 {video.chapters.map((chapter, idx) => {
                   const isActive = activeChapterIndex === idx
                   return (
                     <div
                       key={`${chapter.time}-${idx}`}
                       onClick={() => handleChapterClick(chapter, idx)}
-                      className={`flex items-center justify-between px-4 py-3 text-xs cursor-pointer transition-all duration-200 group ${
+                      className={`flex items-center justify-between py-3 text-xs cursor-pointer transition-colors ${
                         isActive
-                          ? 'bg-slate-100 text-slate-900 font-semibold border-l-4 border-slate-900'
-                          : 'hover:bg-slate-50 text-slate-700'
+                          ? 'border-l-2 border-accent pl-3 text-ink font-semibold'
+                          : 'border-l-2 border-transparent pl-3 text-body hover:text-ink'
                       }`}
                     >
                       <div className="flex items-center gap-3 min-w-0">
-                        <span
-                          className={`font-mono text-xs px-2 py-0.5 rounded transition-colors ${
-                            isActive
-                              ? 'bg-slate-900 text-white font-bold'
-                              : 'bg-slate-100 text-slate-600 border border-slate-200 group-hover:bg-slate-200 group-hover:text-slate-900'
-                          }`}
-                        >
+                        <span className="font-mono text-xs text-muted">
                           {chapter.time}
                         </span>
-                        <span className="truncate group-hover:text-slate-900 transition-colors">
+                        <span className="truncate">
                           {chapter.title}
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-1 shrink-0 ml-3">
-                        <span className="text-[11px] text-slate-400 group-hover:text-slate-900 transition-colors hidden sm:inline">
-                          {isActive ? 'Đang xem' : 'Tua tới đây'}
-                        </span>
-                        <ArrowRight
-                          className={`w-3.5 h-3.5 ${
-                            isActive
-                              ? 'text-slate-900'
-                              : 'text-slate-300 group-hover:text-slate-900 group-hover:translate-x-0.5 transition-all'
-                          }`}
-                        />
+                      <div className="text-[11px] text-muted shrink-0 ml-3">
+                        {isActive ? 'Đang xem' : 'Tua tới đây'}
                       </div>
                     </div>
                   )
                 })}
               </div>
             ) : (
-              <p className="text-xs text-slate-400 italic">Chưa có phân đoạn chapters cho video này.</p>
+              <p className="text-xs text-muted italic">Chưa có phân đoạn cho video này.</p>
             )}
           </section>
 
           {/* Transcript Section */}
           {video.transcript && (
-            <section className="space-y-3 pt-2">
+            <section className="border-t border-line pt-8 space-y-3">
               <div className="flex items-center justify-between">
-                <h2 className="text-sm font-bold text-slate-900">Bản ghi tóm tắt (Transcript)</h2>
+                <h2 className="font-display text-xl text-ink font-medium">Bản ghi tóm tắt</h2>
                 <button
                   onClick={handleCopyTranscript}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-md transition-all ${
-                    transcriptCopied
-                      ? 'bg-slate-900 text-white border border-slate-900'
-                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200'
-                  }`}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md border border-line text-body hover:border-ink hover:text-ink transition-colors cursor-pointer"
                   title="Sao chép toàn bộ bản ghi"
                 >
                   {transcriptCopied ? (
                     <>
-                      <Check className="w-3.5 h-3.5" />
+                      <Check className="w-3.5 h-3.5 text-accent" />
                       <span>Đã sao chép</span>
                     </>
                   ) : (
@@ -328,7 +292,7 @@ export default function VideoPage() {
                   )}
                 </button>
               </div>
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 text-sm text-slate-700 leading-relaxed font-sans whitespace-pre-line">
+              <div className="p-5 rounded-md bg-paper-sunken border border-line text-sm text-body leading-relaxed font-sans whitespace-pre-line">
                 {video.transcript}
               </div>
             </section>
@@ -336,38 +300,31 @@ export default function VideoPage() {
         </div>
 
         {/* Sidebar: Related Prompt Recipes */}
-        <aside className="lg:col-span-1 animate-fade-up delay-200">
-          <div className="lg:sticky lg:top-24 space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-bold text-slate-900">
-                Công thức Prompt đi kèm
+        <aside className="lg:col-span-4">
+          <div className="lg:sticky lg:top-24 space-y-6 border-t lg:border-t-0 lg:border-l border-line lg:pl-8 pt-8 lg:pt-0">
+            <div>
+              <h2 className="font-display text-xl text-ink font-medium">
+                Công thức đi kèm
               </h2>
-              {resolvedRelatedPrompts.length > 0 && (
-                <span className="text-[11px] font-semibold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-md">
-                  {resolvedRelatedPrompts.length}
-                </span>
-              )}
+              <p className="text-xs text-muted mt-1">
+                Áp dụng trực tiếp vào công việc hàng ngày.
+              </p>
             </div>
 
-            <p className="text-xs text-slate-500">
-              Mỗi video đi kèm câu lệnh chuẩn hóa để bạn áp dụng trực tiếp vào công việc:
-            </p>
-
             {resolvedRelatedPrompts.length > 0 ? (
-              <div className="space-y-3.5">
+              <div className="border-t border-line">
                 {resolvedRelatedPrompts.map((p) => (
                   <DocRecipeCard key={p.id} prompt={p} />
                 ))}
               </div>
             ) : (
-              <div className="p-5 rounded-xl border border-dashed border-slate-200 text-center bg-slate-50/50">
-                <p className="text-xs text-slate-500">Chưa có công thức prompt nào liên kết trực tiếp với bài học này.</p>
+              <div className="py-8 text-center text-xs text-muted">
+                <p>Chưa có công thức prompt liên kết với bài học này.</p>
                 <Link
                   to="/prompts"
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-slate-900 hover:underline mt-2"
+                  className="inline-block text-xs font-medium text-body hover:text-accent underline underline-offset-4 decoration-line mt-2"
                 >
-                  <span>Khám phá kho Prompt Hub</span>
-                  <ArrowRight className="w-3 h-3" />
+                  Xem toàn bộ thư viện
                 </Link>
               </div>
             )}
