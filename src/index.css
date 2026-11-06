@@ -78,6 +78,74 @@ body {
   background: #BDB6A4;
 }
 
+/* Vignette Prompt-to-Result Sequence Keyframes (GPU accelerated 60fps, 5.2s cycle) */
+@keyframes vigTypingBox {
+  0%, 36% { opacity: 1; }
+  40%, 94% { opacity: 0; }
+  98%, 100% { opacity: 1; }
+}
+
+@keyframes vigTypeReveal {
+  0%, 4% { clip-path: inset(0 100% 0 0); }
+  28%, 100% { clip-path: inset(0 0% 0 0); }
+}
+
+@keyframes vigSendPulse {
+  0%, 28% { transform: scale(1); opacity: 0.45; }
+  32% { transform: scale(0.84); opacity: 1; }
+  36% { transform: scale(1.06); opacity: 1; }
+  40%, 100% { transform: scale(1); opacity: 0.45; }
+}
+
+@keyframes vigUserSent {
+  0%, 34% { opacity: 0; transform: translate3d(0, 10px, 0); }
+  40%, 92% { opacity: 1; transform: translate3d(0, 0, 0); }
+  96%, 100% { opacity: 0; transform: translate3d(0, -3px, 0); }
+}
+
+@keyframes vigAiReply {
+  0%, 46% { opacity: 0; transform: translate3d(0, 8px, 0); }
+  54%, 92% { opacity: 1; transform: translate3d(0, 0, 0); }
+  96%, 100% { opacity: 0; transform: translate3d(0, -3px, 0); }
+}
+
+@keyframes vigDocHighlight {
+  0%, 48% { opacity: 0.35; transform: scale(0.99); }
+  56%, 92% { opacity: 1; transform: scale(1); }
+  96%, 100% { opacity: 0.35; transform: scale(0.99); }
+}
+
+@keyframes vigCursorSend {
+  0%, 16% { transform: translate3d(-34px, -18px, 0); opacity: 0; }
+  24% { transform: translate3d(-12px, -6px, 0); opacity: 1; }
+  30% { transform: translate3d(0, 0, 0); opacity: 1; }
+  33% { transform: translate3d(0, 0, 0) scale(0.86); opacity: 1; }
+  37% { transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+  46%, 100% { transform: translate3d(6px, 8px, 0); opacity: 0; }
+}
+
+.vig-active .vig-typing-text {
+  animation: vigTypeReveal 5.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+.vig-active .vig-typing-wrap {
+  animation: vigTypingBox 5.2s linear infinite;
+}
+.vig-active .vig-send-btn {
+  animation: vigSendPulse 5.2s ease-out infinite;
+}
+.vig-active .vig-user-msg {
+  animation: vigUserSent 5.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+.vig-active .vig-ai-reply {
+  animation: vigAiReply 5.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+.vig-active .vig-doc-hl {
+  animation: vigDocHighlight 5.2s ease-out infinite;
+}
+.vig-active .vig-cursor {
+  animation: vigCursorSend 5.2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
