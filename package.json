@@ -8,6 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "db:init": "node scripts/seed-neon.js",
     "agy:publish": "pwsh -File ./scripts/pipeline.ps1 -Action publish",
     "agy:qa": "pwsh -File ./scripts/pipeline.ps1 -Action qa",
     "agy:spec": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./scripts/pipeline.ps1 -Action spec -SpecFile"

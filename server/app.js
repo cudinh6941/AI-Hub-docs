@@ -56,6 +56,7 @@ app.get('/api/prompts', async (c) => {
   }
 
   const prompts = res.rows.map(mapRowToPrompt)
+  c.header('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300')
   return c.json({ prompts, engine })
 })
 
@@ -88,6 +89,7 @@ app.get('/api/prompts/:idOrSlug', async (c) => {
 app.get('/api/videos', async (c) => {
   const { db } = await getDb()
   const res = await db.query('SELECT * FROM videos ORDER BY id ASC')
+  c.header('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300')
   return c.json({ videos: res.rows.map(mapRowToVideo) })
 })
 

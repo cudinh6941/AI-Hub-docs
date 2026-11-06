@@ -150,11 +150,15 @@ export async function getDb() {
   initPromise = (async () => {
     const databaseUrl = process.env.DATABASE_URL?.trim()
 
+    const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME)
+
     if (databaseUrl) {
       try {
         const pool = new pg.Pool({
           connectionString: databaseUrl,
           connectionTimeoutMillis: 5000,
+          idleTimeoutMillis: 1000,
+          max: isServerless ? 1 : 10,
           ssl: databaseUrl.includes('localhost') ? false : { rejectUnauthorized: false }
         })
         await pool.query('SELECT 1')
@@ -166,14 +170,16 @@ export async function getDb() {
         console.log('[DB Adapter] Connected to external PostgreSQL via DATABASE_URL')
       } catch (err) {
         console.warn(
-          `[DB Adapter] Failed to connect via DATABASE_URL (${err.message}). Falling back to embedded PGlite...`
+          `[DB Adapter] Failed to connect via DATABASE_URL (${err.message}).`
         )
+        if (isServerless) {
+          throw new Error(`Database connection failed: ${err.message}`)
+        }
       }
     }
 
     if (!dbInstance) {
-      const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME)
-      const baseDir = isServerless ? '/tmp' : ROOT_DIR
+      const baseDir = ROOT_DIR
       const pgDataDir = path.join(baseDir, 'database/pgdata')
       fs.mkdirSync(path.dirname(pgDataDir), { recursive: true })
       const pglite = new PGlite(pgDataDir)
@@ -184,6 +190,16 @@ export async function getDb() {
       }
       activeEngine = 'pglite'
       console.log(`[DB Adapter] Running embedded PostgreSQL (PGlite) at ${pgDataDir}`)
+    }
+
+    // Fast-path: If tables already exist (e.g. Neon in production), skip heavy DDL and seed checks entirely
+    try {
+      const tableCheck = await dbInstance.query("SELECT to_regclass('public.videos') AS tbl")
+      if (tableCheck.rows[0]?.tbl) {
+        return { db: dbInstance, engine: activeEngine }
+      }
+    } catch {
+      // Fall through to full initialization if check fails
     }
 
     // Check if videos table needs migration or recreation (e.g. missing chapters or duration_minutes)
